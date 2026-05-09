@@ -1,0 +1,263 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://src/rpg/skill_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://src/rpg/skill_definition.gd" id="2_skilldef"]
+
+; ── MIND skills ───────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_rabbit_hole"]
+script = ExtResource("2_skilldef")
+id = "rabbit_hole"
+display_name_key = "skill.rabbit_hole.name"
+archetype = "MIND"
+parent_attribute = "MIND"
+description_key = "skill.rabbit_hole.desc"
+voice_profile_id = "voice.rabbit_hole"
+
+[sub_resource type="Resource" id="skill_x_fatigue"]
+script = ExtResource("2_skilldef")
+id = "x_fatigue"
+display_name_key = "skill.x_fatigue.name"
+archetype = "MIND"
+parent_attribute = "MIND"
+description_key = "skill.x_fatigue.desc"
+voice_profile_id = "voice.x_fatigue"
+
+[sub_resource type="Resource" id="skill_doxcraft"]
+script = ExtResource("2_skilldef")
+id = "doxcraft"
+display_name_key = "skill.doxcraft.name"
+archetype = "MIND"
+parent_attribute = "MIND"
+description_key = "skill.doxcraft.desc"
+voice_profile_id = "voice.doxcraft"
+
+[sub_resource type="Resource" id="skill_edit_farm"]
+script = ExtResource("2_skilldef")
+id = "edit_farm"
+display_name_key = "skill.edit_farm.name"
+archetype = "MIND"
+parent_attribute = "MIND"
+description_key = "skill.edit_farm.desc"
+voice_profile_id = "voice.edit_farm"
+
+; ── SOUL skills ───────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_glowie_sense"]
+script = ExtResource("2_skilldef")
+id = "glowie_sense"
+display_name_key = "skill.glowie_sense.name"
+archetype = "SOUL"
+parent_attribute = "SOUL"
+description_key = "skill.glowie_sense.desc"
+voice_profile_id = "voice.glowie_sense"
+
+[sub_resource type="Resource" id="skill_yap_game"]
+script = ExtResource("2_skilldef")
+id = "yap_game"
+display_name_key = "skill.yap_game.name"
+archetype = "SOUL"
+parent_attribute = "SOUL"
+description_key = "skill.yap_game.desc"
+voice_profile_id = "voice.yap_game"
+
+[sub_resource type="Resource" id="skill_lore_depth"]
+script = ExtResource("2_skilldef")
+id = "lore_depth"
+display_name_key = "skill.lore_depth.name"
+archetype = "SOUL"
+parent_attribute = "SOUL"
+description_key = "skill.lore_depth.desc"
+voice_profile_id = "voice.lore_depth"
+
+[sub_resource type="Resource" id="skill_based_talk"]
+script = ExtResource("2_skilldef")
+id = "based_talk"
+display_name_key = "skill.based_talk.name"
+archetype = "SOUL"
+parent_attribute = "SOUL"
+description_key = "skill.based_talk.desc"
+voice_profile_id = "voice.based_talk"
+
+; ── MOUTH skills ──────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_rizz"]
+script = ExtResource("2_skilldef")
+id = "rizz"
+display_name_key = "skill.rizz.name"
+archetype = "MOUTH"
+parent_attribute = "MOUTH"
+description_key = "skill.rizz.desc"
+voice_profile_id = "voice.rizz"
+
+[sub_resource type="Resource" id="skill_npc_mode"]
+script = ExtResource("2_skilldef")
+id = "npc_mode"
+display_name_key = "skill.npc_mode.name"
+archetype = "MOUTH"
+parent_attribute = "MOUTH"
+description_key = "skill.npc_mode.desc"
+voice_profile_id = "voice.npc_mode"
+
+[sub_resource type="Resource" id="skill_ratio"]
+script = ExtResource("2_skilldef")
+id = "ratio"
+display_name_key = "skill.ratio.name"
+archetype = "MOUTH"
+parent_attribute = "MOUTH"
+description_key = "skill.ratio.desc"
+voice_profile_id = "voice.ratio"
+
+[sub_resource type="Resource" id="skill_clout"]
+script = ExtResource("2_skilldef")
+id = "clout"
+display_name_key = "skill.clout.name"
+archetype = "MOUTH"
+parent_attribute = "MOUTH"
+description_key = "skill.clout.desc"
+voice_profile_id = "voice.clout"
+
+; ── GHOST skills ──────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_ghost_mode"]
+script = ExtResource("2_skilldef")
+id = "ghost_mode"
+display_name_key = "skill.ghost_mode.name"
+archetype = "GHOST"
+parent_attribute = "GHOST"
+description_key = "skill.ghost_mode.desc"
+voice_profile_id = "voice.ghost_mode"
+
+[sub_resource type="Resource" id="skill_normie_cosplay"]
+script = ExtResource("2_skilldef")
+id = "normie_cosplay"
+display_name_key = "skill.normie_cosplay.name"
+archetype = "GHOST"
+parent_attribute = "GHOST"
+description_key = "skill.normie_cosplay.desc"
+voice_profile_id = "voice.normie_cosplay"
+
+[sub_resource type="Resource" id="skill_receipts"]
+script = ExtResource("2_skilldef")
+id = "receipts"
+display_name_key = "skill.receipts.name"
+archetype = "GHOST"
+parent_attribute = "GHOST"
+description_key = "skill.receipts.desc"
+voice_profile_id = "voice.receipts"
+
+[sub_resource type="Resource" id="skill_opsec"]
+script = ExtResource("2_skilldef")
+id = "opsec"
+display_name_key = "skill.opsec.name"
+archetype = "GHOST"
+parent_attribute = "GHOST"
+description_key = "skill.opsec.desc"
+voice_profile_id = "voice.opsec"
+
+; ── BODY skills ───────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_gymmaxx"]
+script = ExtResource("2_skilldef")
+id = "gymmaxx"
+display_name_key = "skill.gymmaxx.name"
+archetype = "BODY"
+parent_attribute = "BODY"
+description_key = "skill.gymmaxx.desc"
+voice_profile_id = "voice.gymmaxx"
+
+[sub_resource type="Resource" id="skill_hands"]
+script = ExtResource("2_skilldef")
+id = "hands"
+display_name_key = "skill.hands.name"
+archetype = "BODY"
+parent_attribute = "BODY"
+description_key = "skill.hands.desc"
+voice_profile_id = "voice.hands"
+
+[sub_resource type="Resource" id="skill_anti_slop"]
+script = ExtResource("2_skilldef")
+id = "anti_slop"
+display_name_key = "skill.anti_slop.name"
+archetype = "BODY"
+parent_attribute = "BODY"
+description_key = "skill.anti_slop.desc"
+voice_profile_id = "voice.anti_slop"
+
+[sub_resource type="Resource" id="skill_irl_build"]
+script = ExtResource("2_skilldef")
+id = "irl_build"
+display_name_key = "skill.irl_build.name"
+archetype = "BODY"
+parent_attribute = "BODY"
+description_key = "skill.irl_build.desc"
+voice_profile_id = "voice.irl_build"
+
+; ── SIGNAL skills ─────────────────────────────────────────────────────────────
+
+[sub_resource type="Resource" id="skill_web"]
+script = ExtResource("2_skilldef")
+id = "web"
+display_name_key = "skill.web.name"
+archetype = "SIGNAL"
+parent_attribute = "SIGNAL"
+description_key = "skill.web.desc"
+voice_profile_id = "voice.web"
+
+[sub_resource type="Resource" id="skill_ghost_protocol"]
+script = ExtResource("2_skilldef")
+id = "ghost_protocol"
+display_name_key = "skill.ghost_protocol.name"
+archetype = "SIGNAL"
+parent_attribute = "SIGNAL"
+description_key = "skill.ghost_protocol.desc"
+voice_profile_id = "voice.ghost_protocol"
+
+[sub_resource type="Resource" id="skill_sneaky_links"]
+script = ExtResource("2_skilldef")
+id = "sneaky_links"
+display_name_key = "skill.sneaky_links.name"
+archetype = "SIGNAL"
+parent_attribute = "SIGNAL"
+description_key = "skill.sneaky_links.desc"
+voice_profile_id = "voice.sneaky_links"
+
+[sub_resource type="Resource" id="skill_signal_hijack"]
+script = ExtResource("2_skilldef")
+id = "signal_hijack"
+display_name_key = "skill.signal_hijack.name"
+archetype = "SIGNAL"
+parent_attribute = "SIGNAL"
+description_key = "skill.signal_hijack.desc"
+voice_profile_id = "voice.signal_hijack"
+
+; ── SkillCatalog root ─────────────────────────────────────────────────────────
+
+[resource]
+script = ExtResource("1_catalog")
+skills = [
+	SubResource("skill_rabbit_hole"),
+	SubResource("skill_x_fatigue"),
+	SubResource("skill_doxcraft"),
+	SubResource("skill_edit_farm"),
+	SubResource("skill_glowie_sense"),
+	SubResource("skill_yap_game"),
+	SubResource("skill_lore_depth"),
+	SubResource("skill_based_talk"),
+	SubResource("skill_rizz"),
+	SubResource("skill_npc_mode"),
+	SubResource("skill_ratio"),
+	SubResource("skill_clout"),
+	SubResource("skill_ghost_mode"),
+	SubResource("skill_normie_cosplay"),
+	SubResource("skill_receipts"),
+	SubResource("skill_opsec"),
+	SubResource("skill_gymmaxx"),
+	SubResource("skill_hands"),
+	SubResource("skill_anti_slop"),
+	SubResource("skill_irl_build"),
+	SubResource("skill_web"),
+	SubResource("skill_ghost_protocol"),
+	SubResource("skill_sneaky_links"),
+	SubResource("skill_signal_hijack"),
+]

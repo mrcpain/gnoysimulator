@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource("1_balance")
 dc_table = {}
-skill_xp_per_use = {}
+skill_xp_per_use = {"critical": 2, "success": 1, "fail": 1}
+skill_xp_thresholds = Array[int]([10, 25, 50, 90, 145, 215, 305, 415, 545, 700])
 awakening_thresholds = Array[int]([])
 slot_minutes = {}
 politburo_tick_budget_ms = 500

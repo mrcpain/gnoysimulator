@@ -10,6 +10,8 @@ class_name SaveGameV1 extends Resource
 # RPG cluster (Stories 1.1–1.7)
 @export var attributes: Dictionary = {}
 @export var skills: Dictionary = {}
+@export var skill_xp: Dictionary = {}
+@export var talent_points: int = 0
 @export var talents: Array = []
 @export var awakening_level: int = 1
 @export var disposition: Dictionary = {}

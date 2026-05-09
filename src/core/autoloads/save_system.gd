@@ -19,6 +19,9 @@ func _ready() -> void:
 
 func save_to_slot(slot: int, save: SaveGameV1) -> Error:
 	save.attributes = RPGCore.attributes.duplicate(true)
+	save.skills = RPGCore.skills.duplicate(true)
+	save.skill_xp = RPGCore.skill_xp.duplicate(true)
+	save.talent_points = RPGCore.talent_points
 	var path := _slot_path(slot)
 	var err := ResourceSaver.save(save, path)
 	if err != OK:
@@ -44,6 +47,9 @@ func load_from_slot(slot: int) -> SaveGameV1:
 		Logger.error("save", "load_from_slot(%d): migration returned null. Returning null for UI recovery flow." % slot)
 		return null
 	RPGCore.attributes = save.attributes.duplicate(true)
+	RPGCore.skills = save.skills.duplicate(true)
+	RPGCore.skill_xp = save.skill_xp.duplicate(true)
+	RPGCore.talent_points = save.talent_points
 	return save
 
 
@@ -56,6 +62,8 @@ func dump_save(slot: int) -> String:
 		"schema_version": save.schema_version,
 		"attributes": save.attributes,
 		"skills": save.skills,
+		"skill_xp": save.skill_xp,
+		"talent_points": save.talent_points,
 		"talents": save.talents,
 		"awakening_level": save.awakening_level,
 		"disposition": save.disposition,

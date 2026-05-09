@@ -14,6 +14,11 @@ signal evidence_published(payload: PublicationEvent)
 # Awakening Track — RPGCore re-emits here so ALL subscribers use one path (locked rule 4)
 signal awakening_level_changed(old_level: int, new_level: int)
 
+# Skill progression (RPGCore emits after each rank-up; Story 1.3 is the only XP caller)
+# Forbidden: re-using awakening_level_changed — separate concepts, separate signals (locked rule 4).
+# Forbidden: a per-XP-tick signal — XP is internal accounting until rank-up.
+signal skill_levelled(skill_id: String, new_rank: int)
+
 # Time (WorldClock re-emits here so non-clock clusters stay decoupled)
 signal day_advanced(new_day: int)
 signal week_advanced(new_week: int)

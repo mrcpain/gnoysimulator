@@ -1,5 +1,5 @@
 # generated: 2026-05-05
-# last_updated: 2026-05-09
+# last_updated: 2026-05-09 (Story 1.2 readied for dev)
 # project: goySimulator
 # project_key: NOKEY
 # tracking_system: file-system
@@ -48,7 +48,7 @@ development_status:
   epic-1: in-progress
   1-0-project-scaffolding: done
   1-1-seven-attribute-system: ready-for-dev
-  1-2-24-skill-system: backlog
+  1-2-24-skill-system: review
   1-3-skill-check-engine: backlog
   1-4-40-talents: backlog
   1-5-awakening-track-engine: backlog
