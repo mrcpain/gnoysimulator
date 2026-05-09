@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://src/core/balance/balance_resource.gd" id="1_balance"]
+
+[resource]
+script = ExtResource("1_balance")
+dc_table = {}
+skill_xp_per_use = {}
+awakening_thresholds = Array[int]([])
+slot_minutes = {}
+politburo_tick_budget_ms = 500
+crossfade_duration_seconds = 4.0
+subscription_costs = {}

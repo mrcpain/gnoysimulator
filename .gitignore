@@ -1,0 +1,32 @@
+# Godot engine cache
+.godot/
+.import/
+*.translation
+
+# Export config (credentials must never be committed)
+export.cfg
+export_credentials.cfg
+
+# Temp / backup files
+*.bak
+*.tmp
+*~
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Godot user data directory (runtime only)
+user://*
+
+# Build output
+/build/
+/exports/
+*.x86_64
+*.exe
+*.app
+
+# DO NOT add .tres or .tscn — they are source files
+# DO NOT add _bmad/, _bmad-output/, or docs/ — they are tracked
+# Claude Code local config (machine-specific)
+.claude/

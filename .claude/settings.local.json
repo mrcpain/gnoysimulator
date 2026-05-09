@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "Bash(python3 \"c:/Users/cpain/OneDrive/Desktop/CLAUDE CODE/goySimulator/_bmad/scripts/resolve_customization.py\" --skill \"c:/Users/cpain/OneDrive/Desktop/CLAUDE CODE/goySimulator/.claude/skills/gds-create-gdd\" --key workflow)",
+      "Bash(python3 \"c:/Users/cpain/OneDrive/Desktop/CLAUDE CODE/goySimulator/_bmad/scripts/resolve_customization.py\" --skill \"c:/Users/cpain/OneDrive/Desktop/CLAUDE CODE/goySimulator/.claude/skills/gds-dev-story\" --key workflow)",
+      "PowerShell(scoop search godot 2>&1)",
+      "PowerShell(winget list godot 2>&1)",
+      "Bash(curl -s \"https://api.github.com/repos/bitwes/Gut/releases?per_page=10\")",
+      "Bash(python3 -c \"import json,sys; releases=json.load\\(sys.stdin\\); [print\\(r['tag_name'], r['published_at'][:10]\\) for r in releases[:10]]\")",
+      "Read(//tmp/**)",
+      "Bash(unzip -o gut.zip -d gut_extracted)",
+      "Bash(C:/Users/cpain/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.3-stable_win64_console.exe --headless --path . -s res://addons/gut/gut_cmdln.gd -gdir=res://tests -gexit)",
+      "Bash(C:/Users/cpain/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.3-stable_win64_console.exe --headless --import)",
+      "Bash(grep -v \"^$\")",
+      "Bash(curl -s \"https://api.github.com/repos/bitwes/Gut/releases?per_page=20\")",
+      "Bash(python3 -c \" import json, sys releases = json.load\\(sys.stdin\\) for r in releases: print\\(r['tag_name'], r['published_at'][:10]\\) \")",
+      "Bash(mkdir -p /tmp/gut_install)",
+      "Bash(curl -L https://api.github.com/repos/bitwes/Gut/zipball/9.3.1 -o /tmp/gut_install/gut93.zip)",
+      "Bash(unzip -o gut93.zip -d gut93_extracted)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

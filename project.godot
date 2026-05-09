@@ -1,0 +1,55 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; but you can always edit it manually here.
+; This file is version-controlled and tracked.
+
+config_version=5
+
+[application]
+
+config/name="goySimulator"
+config/description="goySimulator — satirical RPG"
+run/main_scene="res://src/scenes/boot_check.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+config/icon="res://icon.svg"
+
+[audio]
+
+driver/mix_rate=44100
+buses/default_bus_layout="res://default_bus_layout.tres"
+
+[autoload]
+
+Logger="*res://src/core/autoloads/logger.gd"
+ProjectConfig="*res://src/core/autoloads/project_config.gd"
+Balance="*res://src/core/autoloads/balance.gd"
+RNG="*res://src/core/autoloads/rng.gd"
+SaveSystem="*res://src/core/autoloads/save_system.gd"
+WorldClock="*res://src/core/autoloads/world_clock.gd"
+RPGCore="*res://src/core/autoloads/rpg_core.gd"
+ThemeManager="*res://src/core/autoloads/theme_manager.gd"
+MusicDirector="*res://src/core/autoloads/music_director.gd"
+DialogueRunner="*res://src/core/autoloads/dialogue_runner.gd"
+EncounterDirector="*res://src/core/autoloads/encounter_director.gd"
+EventBus="*res://src/core/autoloads/event_bus.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[physics]
+
+common/physics_ticks_per_second=60
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
+renderer/rendering_method.mobile="mobile"

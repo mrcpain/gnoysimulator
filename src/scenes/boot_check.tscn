@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/boot_check.gd" id="1_boot_check"]
+
+[node name="BootCheck" type="Node"]
+script = ExtResource("1_boot_check")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "goySimulator scaffolding ✓"
+horizontal_alignment = 1
+vertical_alignment = 1

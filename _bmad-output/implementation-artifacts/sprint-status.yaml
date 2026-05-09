@@ -1,0 +1,247 @@
+# generated: 2026-05-05
+# last_updated: 2026-05-09
+# project: goySimulator
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-05-05
+last_updated: 2026-05-09
+project: goySimulator
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # ====================================================================
+  # Epic 1: Foundation, Scaffolding & RPG Core
+  # ====================================================================
+  epic-1: in-progress
+  1-0-project-scaffolding: done
+  1-1-seven-attribute-system: ready-for-dev
+  1-2-24-skill-system: backlog
+  1-3-skill-check-engine: backlog
+  1-4-40-talents: backlog
+  1-5-awakening-track-engine: backlog
+  1-6-disposition-axes: backlog
+  1-7-derived-stats: backlog
+  1-8-save-system-ironman: backlog
+  1-9-schema-versioning-migrations: backlog
+  1-10-balance-magic-numbers: backlog
+  1-11-control-scheme-rebinds: backlog
+  1-12-persistent-ambient-hud: backlog
+  epic-1-retrospective: optional
+
+  # ====================================================================
+  # Epic 2: Day Cycle & Survival Loop
+  # ====================================================================
+  epic-2: backlog
+  2-1-worldclock-slots: backlog
+  2-2-snooze-morning-slot: backlog
+  2-3-action-slot-spend: backlog
+  2-4-subscription-cancellation: backlog
+  2-5-monthly-bills-autodeduct: backlog
+  2-6-cope-fatigue-tick: backlog
+  2-7-job-quitting-alt-income: backlog
+  2-8-slop-damage-track: backlog
+  epic-2-retrospective: optional
+
+  # ====================================================================
+  # Epic 3: Combat (Hotline Miami DNA)
+  # ====================================================================
+  epic-3: backlog
+  3-1-encounter-director-snapshot: backlog
+  3-2-stat-modulated-combat: backlog
+  3-3-capture-mechanic: backlog
+  3-4-captured-state-escape: backlog
+  3-5-weapon-inventory-categories: backlog
+  3-6-signature-weapons: backlog
+  3-7-combat-engagement-tiers: backlog
+  3-8-faction-build-counter: backlog
+  3-9-sound-as-gameplay-combat: backlog
+  3-10-combat-difficulty-tuning: backlog
+  epic-3-retrospective: optional
+
+  # ====================================================================
+  # Epic 4: Equipment & Crafting
+  # ====================================================================
+  epic-4: backlog
+  4-1-15-slot-equipment: backlog
+  4-2-quality-tiers-heat: backlog
+  4-3-set-bonus-detection: backlog
+  4-4-materials-crafting: backlog
+  4-5-equipment-inventory-screen: backlog
+  epic-4-retrospective: optional
+
+  # ====================================================================
+  # Epic 5: Investigation UI (Three Layers) — The Truth Paradox
+  # ====================================================================
+  epic-5: backlog
+  5-1-evidence-system: backlog
+  5-2-physical-board: backlog
+  5-3-connection-mechanic: backlog
+  5-4-dossier-interface: backlog
+  5-5-thought-cabinet: backlog
+  5-6-connection-animation-stamps: backlog
+  5-7-awakening-reframes-evidence: backlog
+  epic-5-retrospective: optional
+
+  # ====================================================================
+  # Epic 6: Dialogue System
+  # ====================================================================
+  epic-6: backlog
+  6-1-dialogue-vm-nodes: backlog
+  6-2-dialogue-skill-checks: backlog
+  6-3-inner-voices: backlog
+  6-4-item-drop-dialogue: backlog
+  6-5-conversation-log: backlog
+  6-6-composure-hp: backlog
+  6-7-conversation-log-weaponization: backlog
+  6-8-yaml-tres-importer: backlog
+  6-9-dialogue-interface-screen: backlog
+  6-10-dialogue-tiering: backlog
+  epic-6-retrospective: optional
+
+  # ====================================================================
+  # Epic 7: Three Tracking Systems
+  # ====================================================================
+  epic-7: backlog
+  7-1-distinctness-readme: backlog
+  7-2-player-dossier: backlog
+  7-3-politburo-simulation: backlog
+  7-4-politburo-outputs: backlog
+  7-5-reputation-web: backlog
+  7-6-interrogation-bridge: backlog
+  7-7-faction-standing-ladder: backlog
+  7-8-war-room-ui: backlog
+  epic-7-retrospective: optional
+
+  # ====================================================================
+  # Epic 8: Recruitment & Homebase
+  # ====================================================================
+  epic-8: backlog
+  8-1-recruit-data-model: backlog
+  8-2-organic-recruitment: backlog
+  8-3-mission-based-recruitment: backlog
+  8-4-loyalty-resource: backlog
+  8-5-recruit-loss-glowie: backlog
+  8-6-homebase-stages: backlog
+  8-7-diegetic-homebase: backlog
+  8-8-recruit-management-screen: backlog
+  epic-8-retrospective: optional
+
+  # ====================================================================
+  # Epic 9: World & Districts
+  # ====================================================================
+  epic-9: backlog
+  9-1-district-scene-system: backlog
+  9-2-district-heat-tracking: backlog
+  9-3-12-district-definitions: backlog
+  9-4-sneak-routes: backlog
+  9-5-progressive-map-ui: backlog
+  9-6-traversal-options: backlog
+  9-7-world-map-screen: backlog
+  epic-9-retrospective: optional
+
+  # ====================================================================
+  # Epic 10: Quest System & Endgame Trigger
+  # ====================================================================
+  epic-10: backlog
+  10-1-quest-data-model: backlog
+  10-2-quest-discovery: backlog
+  10-3-quest-journal: backlog
+  10-4-inner-ring-confidence: backlog
+  10-5-emergent-politburo-quests: backlog
+  10-6-markers-mode-hints: backlog
+  epic-10-retrospective: optional
+
+  # ====================================================================
+  # Epic 11: Boss Investigations (5–7 ship; 13 North Star)
+  # ====================================================================
+  epic-11: backlog
+  11-1-boss-template: backlog
+  11-2-fact-checker: backlog
+  11-3-trusted-anchor: backlog
+  11-4-debt-dealer: backlog
+  11-5-innovation-czar: backlog
+  11-6-pulpit-rotating-mask: backlog
+  11-7-glowie: backlog
+  11-8-inner-ring-reveal: backlog
+  epic-11-retrospective: optional
+
+  # ====================================================================
+  # Epic 12: Opening Sequence & Schrödinger's Dave
+  # ====================================================================
+  epic-12: backlog
+  12-1-apartment-morning-alarm: backlog
+  12-2-fridge-slop: backlog
+  12-3-feed-staged-news: backlog
+  12-4-greystone-dave-lock: backlog
+  12-5-incident-staged-filming: backlog
+  12-6-evening-feed-forum: backlog
+  epic-12-retrospective: optional
+
+  # ====================================================================
+  # Epic 13: Theme System, Awakening Filter & Music Deterioration
+  # ====================================================================
+  epic-13: backlog
+  13-1-theme-tokens-foundation: backlog
+  13-2-thememanager-awakening-swap: backlog
+  13-3-awakening-filter-shader: backlog
+  13-4-music-deterioration-crossfade: backlog
+  13-4a-music-deterioration-pipeline: backlog
+  13-5-audio-buses-effects: backlog
+  13-6-awakening-cinematics: backlog
+  13-7-hud-glitch-mirror: backlog
+  13-8-internal-voice-audio-cues: backlog
+  13-9-diegetic-scene-exceptions: backlog
+  epic-13-retrospective: optional
+
+  # ====================================================================
+  # Epic 14: Endings, Polish, Localization & Accessibility
+  # ====================================================================
+  epic-14: backlog
+  14-1-ending-selection: backlog
+  14-2-tutorial-validation: backlog
+  14-3-truth-paradox-legibility: backlog
+  14-4-tr-lint-strings: backlog
+  14-5-font-fallback: backlog
+  14-6-keyboard-nav-screen-reader: backlog
+  14-7-hold-confirm-click-source: backlog
+  14-8-text-scale-colorblind-dyslexia: backlog
+  14-9-subtitles-music-indicator: backlog
+  14-10-performance-validation-gate: backlog
+  14-11-steam-deck-verified: backlog
+  14-12-ip-tone-calibration-gate: backlog
+  14-13-inner-ring-narrative-lock: backlog
+  14-14-asset-budget-tracking: backlog
+  epic-14-retrospective: optional

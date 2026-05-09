@@ -1,0 +1,68 @@
+# GDS Workflow Status Tracker
+# Tracks progress across the GDS workflow chain. Updated by skill completion steps.
+# Created retroactively at end of /gds-create-narrative session (2026-05-03).
+
+project_name: goySimulator
+created: 2026-05-03
+
+workflow_status:
+  brainstorm-game:
+    status: complete
+    output: _bmad-output/brainstorming-session-2026-05-03.md
+    completed: 2026-05-03
+
+  create-game-brief:
+    status: complete
+    output: _bmad-output/game-brief.md
+    completed: 2026-05-03
+
+  create-gdd:
+    status: complete
+    output: _bmad-output/gdd.md
+    completed: 2026-05-03
+
+  create-narrative:
+    status: complete
+    output: _bmad-output/narrative-design/index.md
+    output_archive: _bmad-output/archive/narrative-design.md
+    completed: 2026-05-03
+    notes: "Solo + Vibe Coding ship target recommended (~80-120k words). Full-scope path preserved as North Star. Document sharded into 17 section files via bmad-shard-doc; original archived."
+
+  game-architecture:
+    status: pending
+
+  create-epics-and-stories:
+    status: pending
+
+  create-ux-design:
+    status: complete
+    output: _bmad-output/planning-artifacts/ux-design-specification.md
+    completed: 2026-05-03
+    notes: "Full 14-step gds-create-ux-design workflow. Direction 3+6 chosen (persistent ambient HUD that awakens with character + Persona-5-grade authorship on both Xyoner and Resistance themes). In-house Gnoy UI Kit on engine-native tooling (Unity UI Toolkit or Godot Control). HTML mockup deliverables (color-themes.html / design-directions.html) deferred — pixel-art game, deliverable will be sprite/concept work at vertical slice. WCAG AA target with documented game-specific exemptions."
+
+# Open design questions carried forward (from NDD Step 10)
+open_questions:
+  - id: mole-identity
+    description: "Inner Ring Mole identity (4 archetypes drafted; True Believer is party-mode majority pick, Cynic is solo-cost-optimal)"
+    decision_deadline: "Before endgame implementation"
+    owner: cpain
+
+  - id: pulpit-roster
+    description: "4 sub-bosses vs. 1 rotating-mask boss. Solo path recommends rotating-mask."
+    decision_deadline: "Before Pulpit Quarter content scaling"
+    owner: cpain
+
+  - id: inner-ring-size
+    description: "Number of Inner Ring members (drives Compound endgame structure)"
+    decision_deadline: "Before Compound implementation"
+    owner: cpain
+
+  - id: engine-selection
+    description: "Unity vs. Godot vs. Unreal (NDD recommends Unity or Godot for 2D pipeline maturity)"
+    decision_deadline: "Architecture phase"
+    owner: cpain + architect
+
+  - id: funding-model
+    description: "Self-funded EA vs. Kickstarter (~$50-150k) vs. publisher signing"
+    decision_deadline: "Before vertical slice begins"
+    owner: cpain
