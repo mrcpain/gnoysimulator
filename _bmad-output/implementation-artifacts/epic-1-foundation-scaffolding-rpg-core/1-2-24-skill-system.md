@@ -1,6 +1,6 @@
 # Story 1.2: 24-Skill System
 
-Status: review
+Status: done
 
 <!-- Story key: 1-2-24-skill-system | Epic 1: Foundation, Scaffolding & RPG Core -->
 <!-- Second RPGCore-cluster story. Builds the skill ladder primitives that Stories 1.3 (skill-check engine), 1.4 (talents), 1.7 (derived stats), and Epic 6 (dialogue VM) all read from. -->
