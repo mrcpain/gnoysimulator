@@ -130,16 +130,16 @@ func test_skill_capped_at_rank_10() -> void:
 
 
 func test_multi_level_up_in_single_award() -> void:
-	# Set XP to 24 (rank 0, below both threshold[0]=10 and threshold[1]=25).
-	# One "success" award (+1 XP → 25) crosses thresholds at 10 AND 25 in the same call.
-	_rpg.skill_xp["hands"] = 24
+	var bal := Balance.get_data()
+	# Set XP to threshold[1] - 1 (one "success" award crosses both threshold[0] and threshold[1]).
+	var xp_setup: int = int(bal.skill_xp_thresholds[1]) - int(bal.skill_xp_per_use.get("success", 1))
+	_rpg.skill_xp["hands"] = xp_setup
 	_rpg.award_skill_xp("hands", "success")
 	assert_eq(_rpg.get_skill_rank("hands"), 2, "Must advance two ranks in a single award")
 	assert_signal_emit_count(_event_bus, "skill_levelled", 2)
 
 
 func test_award_skill_xp_does_not_emit_awakening_signal() -> void:
-	watch_signals(_event_bus)
 	for _i in range(15):
 		_rpg.award_skill_xp("web", "success")
 	assert_signal_emit_count(_event_bus, "awakening_level_changed", 0)

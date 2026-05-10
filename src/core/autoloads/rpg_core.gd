@@ -83,6 +83,9 @@ func award_skill_xp(skill_id: String, outcome: String) -> void:
 	else:
 		Logger.warn("rpg", "award_skill_xp: skill_xp_per_use missing key '%s'; awarding 0 XP" % outcome)
 		delta = 0
+	if delta < 0:
+		Logger.warn("rpg", "award_skill_xp: skill_xp_per_use['%s'] is negative (%d); clamped to 0" % [outcome, delta])
+		delta = 0
 
 	skill_xp[skill_id] = int(skill_xp.get(skill_id, 0)) + delta
 
@@ -96,6 +99,8 @@ func award_skill_xp(skill_id: String, outcome: String) -> void:
 			Logger.info("rpg", "talent point awarded (skill '%s' reached rank %d)" % [skill_id, current_rank])
 		EventBus.skill_levelled.emit(skill_id, current_rank)
 		Logger.info("rpg", "skill '%s' levelled to rank %d" % [skill_id, current_rank])
+	if current_rank < Skills.MAX_RANK and current_rank >= thresholds.size():
+		Logger.warn("rpg", "award_skill_xp: thresholds array has %d entries (need %d); '%s' soft-capped at rank %d" % [thresholds.size(), Skills.MAX_RANK, skill_id, current_rank])
 
 
 func _seed_skills_if_empty() -> void:

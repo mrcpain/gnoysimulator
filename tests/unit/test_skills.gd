@@ -80,3 +80,17 @@ func test_default_skill_xp_returns_24_zeros() -> void:
 	for id in Skills.ALL_IDS:
 		assert_true(d.has(id), "Key '%s' must be present" % id)
 		assert_eq(d[id], 0, "Default xp for '%s' must be 0" % id)
+
+
+func test_all_ids_matches_archetype_group_union() -> void:
+	var from_groups: Array[String] = []
+	from_groups.append_array(Skills.MIND_IDS)
+	from_groups.append_array(Skills.SOUL_IDS)
+	from_groups.append_array(Skills.MOUTH_IDS)
+	from_groups.append_array(Skills.GHOST_IDS)
+	from_groups.append_array(Skills.BODY_IDS)
+	from_groups.append_array(Skills.SIGNAL_IDS)
+	from_groups.sort()
+	var all_sorted: Array[String] = Skills.ALL_IDS.duplicate()
+	all_sorted.sort()
+	assert_eq(all_sorted, from_groups, "ALL_IDS must exactly match the union of all six archetype group arrays")
