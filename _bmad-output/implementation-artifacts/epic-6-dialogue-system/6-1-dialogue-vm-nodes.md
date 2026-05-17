@@ -1,6 +1,6 @@
 # Story 6.1: Dialogue VM — All 9 Node Types
 
-**Status:** review
+**Status:** done
 **Epic:** 6 — Dialogue System
 **Story ID:** 6.1
 **Story Key:** 6-1-dialogue-vm-nodes
