@@ -1,5 +1,5 @@
 # generated: 2026-05-05
-# last_updated: 2026-05-09 (Story 1.2 readied for dev)
+# last_updated: 2026-05-17 (Story 4.5 Equipment / Inventory Screen — code review complete, marked done)
 # project: goySimulator
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-05
-last_updated: 2026-05-09
+last_updated: 2026-05-16 (Story 5.2 Physical Board — done)
 project: goySimulator
 project_key: NOKEY
 tracking_system: file-system
@@ -45,69 +45,69 @@ development_status:
   # ====================================================================
   # Epic 1: Foundation, Scaffolding & RPG Core
   # ====================================================================
-  epic-1: in-progress
+  epic-1: done
   1-0-project-scaffolding: done
-  1-1-seven-attribute-system: ready-for-dev
+  1-1-seven-attribute-system: done
   1-2-24-skill-system: done
-  1-3-skill-check-engine: backlog
-  1-4-40-talents: backlog
-  1-5-awakening-track-engine: backlog
-  1-6-disposition-axes: backlog
-  1-7-derived-stats: backlog
-  1-8-save-system-ironman: backlog
-  1-9-schema-versioning-migrations: backlog
-  1-10-balance-magic-numbers: backlog
-  1-11-control-scheme-rebinds: backlog
-  1-12-persistent-ambient-hud: backlog
-  epic-1-retrospective: optional
+  1-3-skill-check-engine: done
+  1-4-40-talents: done
+  1-5-awakening-track-engine: done
+  1-6-disposition-axes: done
+  1-7-derived-stats: done
+  1-8-save-system-ironman: done
+  1-9-schema-versioning-migrations: done
+  1-10-balance-magic-numbers: done
+  1-11-control-scheme-rebinds: done
+  1-12-persistent-ambient-hud: done
+  epic-1-retrospective: done
 
   # ====================================================================
   # Epic 2: Day Cycle & Survival Loop
   # ====================================================================
-  epic-2: backlog
-  2-1-worldclock-slots: backlog
-  2-2-snooze-morning-slot: backlog
-  2-3-action-slot-spend: backlog
-  2-4-subscription-cancellation: backlog
-  2-5-monthly-bills-autodeduct: backlog
-  2-6-cope-fatigue-tick: backlog
-  2-7-job-quitting-alt-income: backlog
-  2-8-slop-damage-track: backlog
+  epic-2: in-progress
+  2-1-worldclock-slots: done
+  2-2-snooze-morning-slot: done
+  2-3-action-slot-spend: done
+  2-4-subscription-cancellation: done
+  2-5-monthly-bills-autodeduct: done
+  2-6-cope-fatigue-tick: done
+  2-7-job-quitting-alt-income: done
+  2-8-slop-damage-track: done
   epic-2-retrospective: optional
 
   # ====================================================================
   # Epic 3: Combat (Hotline Miami DNA)
   # ====================================================================
-  epic-3: backlog
-  3-1-encounter-director-snapshot: backlog
-  3-2-stat-modulated-combat: backlog
-  3-3-capture-mechanic: backlog
-  3-4-captured-state-escape: backlog
-  3-5-weapon-inventory-categories: backlog
-  3-6-signature-weapons: backlog
-  3-7-combat-engagement-tiers: backlog
-  3-8-faction-build-counter: backlog
-  3-9-sound-as-gameplay-combat: backlog
-  3-10-combat-difficulty-tuning: backlog
+  epic-3: in-progress
+  3-1-encounter-director-snapshot: done
+  3-2-stat-modulated-combat: done
+  3-3-capture-mechanic: done
+  3-4-captured-state-escape: done
+  3-5-weapon-inventory-categories: done
+  3-6-signature-weapons: done
+  3-7-combat-engagement-tiers: done
+  3-8-faction-build-counter: done
+  3-9-sound-as-gameplay-combat: done
+  3-10-combat-difficulty-tuning: done
   epic-3-retrospective: optional
 
   # ====================================================================
   # Epic 4: Equipment & Crafting
   # ====================================================================
-  epic-4: backlog
-  4-1-15-slot-equipment: backlog
-  4-2-quality-tiers-heat: backlog
-  4-3-set-bonus-detection: backlog
-  4-4-materials-crafting: backlog
-  4-5-equipment-inventory-screen: backlog
+  epic-4: in-progress
+  4-1-15-slot-equipment: done
+  4-2-quality-tiers-heat: done
+  4-3-set-bonus-detection: done
+  4-4-materials-crafting: done
+  4-5-equipment-inventory-screen: done
   epic-4-retrospective: optional
 
   # ====================================================================
   # Epic 5: Investigation UI (Three Layers) — The Truth Paradox
   # ====================================================================
-  epic-5: backlog
-  5-1-evidence-system: backlog
-  5-2-physical-board: backlog
+  epic-5: in-progress
+  5-1-evidence-system: done
+  5-2-physical-board: done
   5-3-connection-mechanic: backlog
   5-4-dossier-interface: backlog
   5-5-thought-cabinet: backlog
@@ -245,3 +245,29 @@ development_status:
   14-13-inner-ring-narrative-lock: backlog
   14-14-asset-budget-tracking: backlog
   epic-14-retrospective: optional
+
+  # ====================================================================
+  # Epic A: Art Production (Visual Assets) — Parallel art track
+  # ====================================================================
+  # Pipeline-validation status (smoke tests, NOT shippable VS assets):
+  #   - sprite pipeline (idle + walk south): validated 2026-05-10
+  #   - tileset pipeline (apartment interior): validated (per art-production-plan §2)
+  # All Epic A stories produce shippable, art-direction-approved final assets.
+  # See: _bmad-output/planning-artifacts/art-production-plan.md
+  epic-A: in-progress
+  a-1-player-wageworker-sprites: done
+  a-2-dave-three-variant-sprites: backlog
+  a-3-fact-checker-sprites: backlog
+  a-4-generic-gnoym-civilians: backlog
+  a-5-named-npcs-reputation-web: backlog
+  a-6-slopside-tileset-apartment: backlog
+  a-7-cubicle-belt-tileset-greystone: backlog
+  a-8-plaza-tileset-broadcast-row: backlog
+  a-9-hud-dialogue-ui-assets: backlog
+  a-10-investigation-ui-assets: backlog
+  a-11-journal-character-ui-assets: backlog
+  a-12-xyoner-feed-app-mockup: backlog
+  a-13-vs-portrait-set: backlog
+  a-14-vs-icon-pack: backlog
+  a-15-post-vs-asset-backlog: backlog
+  epic-A-retrospective: optional
