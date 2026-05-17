@@ -1,13 +1,77 @@
 extends Node
 
-## Custom GDScript dialogue VM — stub. Full VM lands in Epic 6.
-## Custom VM lives here. NOT Dialogic, Yarn, or Ink. See architecture §3.8 + §5.5.
-## These third-party dialogue systems are explicitly rejected (arch locked rule 6).
+## Story 6.1 — DialogueRunner autoload: thin facade over DialogueVM.
+## Architecture locked rule 6: one VM instance; no special-case code paths.
+## Callers MUST NOT mutate the underlying DialogueVM instance.
+## Only tests may read _vm internals via runtime_state().
+
+var _vm: DialogueVM = null
+var _offline_unlocks: Dictionary = {}  # {line_id: source} — stashed while VM inactive
+
 
 func _ready() -> void:
-	Logger.info("dialogue", "DialogueRunner ready — VM stub at Story 1.0.")
+	_vm = DialogueVM.new()
+	EventBus.dialogue_line_unlocked.connect(_on_dialogue_line_unlocked)
+	Logger.info("dialogue", "DialogueRunner ready — VM facade active (Story 6.1).")
 
 
-func start_dialogue(dialog_id: String) -> void:
-	## No-op + log. Epic 6 implements the real VM.
-	Logger.debug("dialogue", "start_dialogue('%s') — stub at Story 1.0." % dialog_id)
+func start_dialogue(graph_id: String, encounter_context: RefCounted = null) -> bool:
+	var graph: DialogueGraph = DialogueCatalog.get_graph(graph_id)
+	if graph == null:
+		Logger.error("dialogue", "DialogueRunner.start_dialogue: graph_id '%s' not found in catalog" % graph_id)
+		return false
+
+	# Seed offline unlocks before start so the VM state reflects them from the first node
+	if _offline_unlocks.size() > 0:
+		# start() will create a new state; we seed after start
+		pass
+
+	var ok: bool = _vm.start(graph, encounter_context)
+
+	# Flush offline unlocks into the fresh runtime state
+	if ok and _offline_unlocks.size() > 0:
+		for line_id: String in _offline_unlocks.keys():
+			if _vm.runtime_state() != null:
+				_vm.runtime_state().unlocked_line_ids[line_id] = true
+		_offline_unlocks.clear()
+
+	return ok
+
+
+func submit_choice(choice_id: String) -> bool:
+	return _vm.submit_choice(choice_id)
+
+
+func accept_item_drop(instance_id: String) -> bool:
+	return _vm.accept_item_drop(instance_id)
+
+
+func interrupt(reason: String) -> void:
+	_vm.interrupt(reason)
+
+
+func attach_encounter_context(ctx: RefCounted) -> void:
+	_vm.attach_encounter_context(ctx)
+
+
+func is_active() -> bool:
+	return _vm.is_active()
+
+
+func current_node_id() -> String:
+	return _vm.current_node_id()
+
+
+func current_graph_id() -> String:
+	return _vm.current_graph_id()
+
+
+func runtime_state() -> DialogueRuntimeState:
+	return _vm.runtime_state()
+
+
+func _on_dialogue_line_unlocked(line_id: String, source: String) -> void:
+	if _vm.is_active() and _vm.runtime_state() != null:
+		_vm.runtime_state().unlocked_line_ids[line_id] = true
+	else:
+		_offline_unlocks[line_id] = source

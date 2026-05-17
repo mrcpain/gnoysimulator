@@ -1,0 +1,95 @@
+[gd_resource type="Resource" script_class="DialogueGraph" format=3]
+
+[ext_resource type="Script" path="res://src/dialogue/dialogue_graph.gd" id="1_dgraph"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/line_node.gd" id="2_line"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/branch_node.gd" id="3_branch"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/internal_voice_node.gd" id="4_ivoice"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/choice_node.gd" id="5_choice"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/skill_check_node.gd" id="6_skillchk"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/item_drop_node.gd" id="7_itemdrop"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/system_effect_node.gd" id="8_syseffect"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/commit_node.gd" id="9_commit"]
+[ext_resource type="Script" path="res://src/dialogue/nodes/end_node.gd" id="10_end"]
+
+[sub_resource type="Resource" id="n_line_intro"]
+script = ExtResource("2_line")
+node_id = "n_line_intro"
+node_type = "line"
+next_id = "n_branch_awakening"
+speaker_id = "test_npc_001"
+body_key = "dialogue.test_fixture.intro"
+tags = PackedStringArray("quotable")
+voice_profile_id = ""
+
+[sub_resource type="Resource" id="n_branch_awakening"]
+script = ExtResource("3_branch")
+node_id = "n_branch_awakening"
+node_type = "branch"
+next_id = ""
+conditions = Array[Dictionary]([{"condition_type": "awakening_min", "args": {"awakening_min": 0}, "next_id": "n_internal_voice_doxcraft"}, {"condition_type": "always", "args": {}, "next_id": "n_choice_skill_gate"}])
+
+[sub_resource type="Resource" id="n_internal_voice_doxcraft"]
+script = ExtResource("4_ivoice")
+node_id = "n_internal_voice_doxcraft"
+node_type = "internal_voice"
+next_id = "n_choice_skill_gate"
+voice_profile_id = "doxcraft"
+body_key = "dialogue.test_fixture.doxcraft_interjection"
+base_frequency = 1.0
+chorus_tier = "interjecting"
+
+[sub_resource type="Resource" id="n_choice_skill_gate"]
+script = ExtResource("5_choice")
+node_id = "n_choice_skill_gate"
+node_type = "choice"
+next_id = ""
+choices = Array[Dictionary]([{"choice_id": "c_skill_yap", "body_key": "dialogue.test_fixture.choice_yap", "next_id": "n_skill_check_yap", "gate": "skill_check", "gate_args": {"skill_id": "yap_game", "dc": 10}, "item_accepted": false}, {"choice_id": "c_plain", "body_key": "dialogue.test_fixture.choice_plain", "next_id": "n_item_drop", "gate": "none", "gate_args": {}, "item_accepted": false}])
+
+[sub_resource type="Resource" id="n_skill_check_yap"]
+script = ExtResource("6_skillchk")
+node_id = "n_skill_check_yap"
+node_type = "skill_check"
+next_id = ""
+skill_id = "yap_game"
+dc = 10
+modifier = 0
+stream_name = "dialogue"
+outcome_next_ids = {"critical": "n_item_drop", "success": "n_item_drop", "fail": "n_item_drop"}
+
+[sub_resource type="Resource" id="n_item_drop"]
+script = ExtResource("7_itemdrop")
+node_id = "n_item_drop"
+node_type = "item_drop"
+next_id = "n_system_effect"
+accepted_items = Array[Dictionary]([{"evidence_definition_id": "passport_scan", "next_id": "n_system_effect", "consume_on_accept": false, "reaction_line_id": ""}])
+
+[sub_resource type="Resource" id="n_system_effect"]
+script = ExtResource("8_syseffect")
+node_id = "n_system_effect"
+node_type = "system_effect"
+next_id = "n_commit"
+effects = Array[Dictionary]([{"effect_type": "set_flag", "args": {"flag_id": "test_flag_set"}}, {"effect_type": "unlock_line", "args": {"line_id": "test_unlocked_line", "source": "system_effect_node"}}])
+
+[sub_resource type="Resource" id="n_commit"]
+script = ExtResource("9_commit")
+node_id = "n_commit"
+node_type = "commit"
+next_id = "n_end"
+committed_line_id = "c_skill_yap"
+npc_line_id = "n_line_intro"
+commit_tags = PackedStringArray("quotable", "faction_relevant")
+
+[sub_resource type="Resource" id="n_end"]
+script = ExtResource("10_end")
+node_id = "n_end"
+node_type = "end"
+next_id = ""
+end_reason = "normal"
+
+[resource]
+script = ExtResource("1_dgraph")
+graph_id = "dialogue_vm_test_fixture"
+tier = "routine"
+start_node_id = "n_line_intro"
+participants = PackedStringArray("test_npc_001")
+nodes = [SubResource("n_line_intro"), SubResource("n_branch_awakening"), SubResource("n_internal_voice_doxcraft"), SubResource("n_choice_skill_gate"), SubResource("n_skill_check_yap"), SubResource("n_item_drop"), SubResource("n_system_effect"), SubResource("n_commit"), SubResource("n_end")]

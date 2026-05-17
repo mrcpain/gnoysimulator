@@ -1,5 +1,5 @@
 # generated: 2026-05-05
-# last_updated: 2026-05-17 (Story 4.5 Equipment / Inventory Screen — code review complete, marked done)
+# last_updated: 2026-05-17 (Story 6.1 Dialogue VM — All 9 Node Types — ready-for-dev)
 # project: goySimulator
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-05
-last_updated: 2026-05-16 (Story 5.2 Physical Board — done)
+last_updated: 2026-05-17 (Story 6.1 Dialogue VM — All 9 Node Types — ready-for-dev)
 project: goySimulator
 project_key: NOKEY
 tracking_system: file-system
@@ -108,18 +108,18 @@ development_status:
   epic-5: in-progress
   5-1-evidence-system: done
   5-2-physical-board: done
-  5-3-connection-mechanic: backlog
-  5-4-dossier-interface: backlog
-  5-5-thought-cabinet: backlog
-  5-6-connection-animation-stamps: backlog
-  5-7-awakening-reframes-evidence: backlog
+  5-3-connection-mechanic: done
+  5-4-dossier-interface: done
+  5-5-thought-cabinet: done
+  5-6-connection-animation-stamps: done
+  5-7-awakening-reframes-evidence: done
   epic-5-retrospective: optional
 
   # ====================================================================
   # Epic 6: Dialogue System
   # ====================================================================
-  epic-6: backlog
-  6-1-dialogue-vm-nodes: backlog
+  epic-6: in-progress
+  6-1-dialogue-vm-nodes: review
   6-2-dialogue-skill-checks: backlog
   6-3-inner-voices: backlog
   6-4-item-drop-dialogue: backlog

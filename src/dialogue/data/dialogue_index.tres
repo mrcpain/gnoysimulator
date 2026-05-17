@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogueIndexResource" format=3]
+
+[ext_resource type="Script" path="res://src/dialogue/dialogue_index_resource.gd" id="1_idx"]
+[ext_resource type="Resource" path="res://src/dialogue/data/fixtures/dialogue_vm_test_fixture.tres" id="2_fixture"]
+
+[resource]
+script = ExtResource("1_idx")
+graphs = Array[DialogueGraph]([ExtResource("2_fixture")])
