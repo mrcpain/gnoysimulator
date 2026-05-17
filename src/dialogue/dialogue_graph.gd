@@ -114,7 +114,10 @@ func _validate_branch_node(node: DialogueBranchNode, seen_ids: Dictionary) -> bo
 			push_warning("DialogueGraph.validate [%s]: branch '%s' has unknown condition_type '%s'" % [graph_id, node.node_id, ctype])
 			return false
 		var next: String = cond.get("next_id", "")
-		if next != "" and not seen_ids.has(next):
+		if next == "":
+			push_warning("DialogueGraph.validate [%s]: branch '%s' condition has empty next_id (condition_type='%s')" % [graph_id, node.node_id, ctype])
+			return false
+		if not seen_ids.has(next):
 			push_warning("DialogueGraph.validate [%s]: branch '%s' condition has dangling next_id '%s'" % [graph_id, node.node_id, next])
 			return false
 		if ctype == DialogueBranchNode.COND_ALWAYS:

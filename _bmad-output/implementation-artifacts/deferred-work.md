@@ -1,5 +1,10 @@
 # Deferred Work
 
+## Deferred from: Story 5.6 — Connection Skill-Check Animation + Stamp Grammar (2026-05-17)
+
+- **Story 5.6 audio: real one-shot streams for `stamp_press` / `dice_rattle` / `typewriter_clatter` / `wax_seal_thud`** — Epic A audio backlog. `StampGrammar.sfx_stream_for()` returns `null` when the file is absent and the `AudioStreamPlayer.stream = null` fallback silently no-ops (mirrors Story 3.9 footstep null-stream handling). When the real `.wav` assets land, import them into Godot from `audio/sfx/ui/` and no code changes are needed — the path-based lookup in `stamp_grammar.sfx_placeholder_streams` will resolve automatically.
+
+
 ## Deferred from: code review of 5-2-physical-board (2026-05-16)
 
 - **`StyleBoxFlat` allocated on every EvidenceCard state change** — `_apply_state_style()` creates a new `StyleBoxFlat` and calls `add_theme_stylebox_override` on every hover/focus/arm event. Not a correctness issue; with many cards on screen this could be a frame-budget concern. Fix: cache one stylebox per state and mutate properties, or use a theme-based approach.
@@ -181,3 +186,20 @@
 - ~~Stale talent IDs from old saves persist undetected after rename/removal — migration strategy is Story 1.9 (schema versioning + migrations)~~ **Fixed in Story 1.9** via `validate_and_clamp` (drops unknown talent IDs on load).
 - Mutual-exclusion check reports only first conflict — spec defines single `conflicting_talent` key; consistent with AC3 contract
 - Prerequisite check runs before cost check — ordering unspecified by spec; no caller impact until multi-prereq talents are added
+
+## Deferred from: code review of 5-6-connection-animation-stamps (2026-05-17)
+
+- ThemeToken MAGENTA-to-numeric coercion: `float(Color.MAGENTA)` ≈ 1.0 and `int(Color.MAGENTA)` = 0 for any missing numeric token — produces wrong rotation target or zero flip count silently. Detectable at boot via the now-corrected `_check_stamp_grammar_tokens()` guard; no runtime guard per call site. Post-VS if token coverage gaps emerge.
+- CancellationStamp `pivot_offset` not set before rotation tween — rotation pivots from top-left (0,0) rather than center during the 2.4 entrance animation. Pre-existing 2.4 behavior; out of scope for 5.6 ("no new fields" contract). Fix in 2.4 retrospective or when CancellationStamp visual polish is scheduled.
+
+## Deferred from: code review of 5-7-awakening-reframes-evidence (2026-05-17)
+
+- **EvidenceCard double-call to `get_instance_for_ui`**: `_visible_reframing_tags()` and `_refresh_symbol_tooltip()` each independently call `EvidenceInventory.get_instance_for_ui(instance_id)` instead of reusing the data fetched at the top of `_populate_from_instance()`. Performance concern on boards with many cards; not a correctness bug. Fix: pass `data` as a parameter to both helpers, or cache in `_populate_from_instance()` before calling them.
+- **Duplicate `at_awakening` values in addenda**: `ThoughtCatalog.awakening_addenda_for` sorts but does not deduplicate entries with identical `at_awakening` values. `_refresh_addenda()` would render both as separate bracketed lines. Designer responsibility to avoid duplicates in `balance.tres`; no test enforces uniqueness. Fix if needed at Epic 13 balance-audit pass.
+
+
+## Deferred from: code review of 6-1-dialogue-vm-nodes (2026-05-17)
+
+- **speaker_id hardcoded "player" in CommitNode payload** — `_resolve_commit_node` emits `DialogueLineCommittedEvent` with `speaker_id = "player"` always. For NPC-only commits (`committed_line_id = ""`), the speaker should be the NPC. Story 6.5 (Conversation Log) is the natural owner — it has the full commit context and NPC reference.
+
+- **accept_item_drop no-match leaves VM cursor on ItemDrop node indefinitely** — when an unrecognized item is dropped, the VM correctly emits `dialogue_item_drop_resolved(accepted=false)` and stays on the ItemDrop node. Story 6.4 (Item Drop Drag UI) owns the UX feedback path; that story should hook the rejected signal to show a "wrong item" response and (optionally) offer a way to cancel or re-try.

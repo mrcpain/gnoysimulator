@@ -11,7 +11,7 @@ var _active: bool = false
 
 # ── Public API ───────────────────────────────────────────────────────────────
 
-func start(graph: DialogueGraph, encounter_context: RefCounted = null) -> bool:
+func start(graph: DialogueGraph, encounter_context: RefCounted = null, prefill_unlocks: Dictionary = {}) -> bool:
 	if graph == null:
 		Logger.error("dialogue", "DialogueVM.start: graph is null")
 		return false
@@ -21,6 +21,9 @@ func start(graph: DialogueGraph, encounter_context: RefCounted = null) -> bool:
 
 	_state = DialogueRuntimeState.new()
 	_state.reset(graph)
+	# Seed offline unlocks BEFORE first advance so choice/branch gates see them (AC5)
+	for lid: String in prefill_unlocks:
+		_state.unlocked_line_ids[lid] = true
 	# Attach context BEFORE the initial advance so EncounterContext hooks fire correctly
 	if encounter_context != null:
 		_state.encounter_context = encounter_context
@@ -58,6 +61,8 @@ func submit_choice(choice_id: String) -> bool:
 		if choice.get("choice_id", "") == choice_id:
 			EventBus.dialogue_choice_selected.emit(_state.graph.graph_id, node.node_id, choice_id)
 			var next: String = choice.get("next_id", "")
+			if next == "":
+				next = choice_node.next_id  # fallback to node-level default routing
 			if next != "":
 				_state.current_node_id = next
 			_advance_to_interactive()
@@ -264,7 +269,7 @@ func _resolve_internal_voice_node(node: DialogueInternalVoiceNode) -> bool:
 	# Frequency roll — base_frequency=1.0 always emits
 	var freq: float = _compute_voice_frequency(node.base_frequency)
 	if freq < 1.0:
-		var roll: float = randf()
+		var roll: float = RNG.stream("dialogue").randf()
 		if roll >= freq:
 			# Skip — advance to next node without emitting
 			_state.current_node_id = node.next_id

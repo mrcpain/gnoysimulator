@@ -21,18 +21,9 @@ func start_dialogue(graph_id: String, encounter_context: RefCounted = null) -> b
 		Logger.error("dialogue", "DialogueRunner.start_dialogue: graph_id '%s' not found in catalog" % graph_id)
 		return false
 
-	# Seed offline unlocks before start so the VM state reflects them from the first node
-	if _offline_unlocks.size() > 0:
-		# start() will create a new state; we seed after start
-		pass
-
-	var ok: bool = _vm.start(graph, encounter_context)
-
-	# Flush offline unlocks into the fresh runtime state
-	if ok and _offline_unlocks.size() > 0:
-		for line_id: String in _offline_unlocks.keys():
-			if _vm.runtime_state() != null:
-				_vm.runtime_state().unlocked_line_ids[line_id] = true
+	# Pass offline unlocks into start() so they are seeded BEFORE dialogue_started fires (AC5)
+	var ok: bool = _vm.start(graph, encounter_context, _offline_unlocks)
+	if ok:
 		_offline_unlocks.clear()
 
 	return ok

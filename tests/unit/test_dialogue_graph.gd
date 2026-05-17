@@ -89,6 +89,22 @@ func test_branch_non_terminal_always_fails() -> void:
 	assert_false(g.validate(), "Non-terminal 'always' condition must fail validate()")
 
 
+func test_branch_condition_empty_next_id_fails() -> void:
+	var g := DialogueGraph.new()
+	g.graph_id = "empty_next_id"
+	g.start_node_id = "n_branch"
+	var branch := DialogueBranchNode.new()
+	branch.node_id = "n_branch"
+	branch.conditions = [
+		{"condition_type": "awakening_min", "args": {"awakening_min": 0}, "next_id": ""},
+		{"condition_type": "always", "args": {}, "next_id": "n_end"},
+	]
+	var end := DialogueEndNode.new()
+	end.node_id = "n_end"
+	g.nodes = [branch, end]
+	assert_false(g.validate(), "Branch condition with empty next_id must fail validate()")
+
+
 func test_choice_missing_skill_id_in_gate_args_fails() -> void:
 	var g := DialogueGraph.new()
 	g.graph_id = "bad_choice"

@@ -711,6 +711,17 @@ claude-sonnet-4-6[1m]
 - tests/integration/test_dialogue_no_save_persistence.gd (new)
 - tests/integration/test_dialogue_runner_offline_unlocks.gd (new)
 
+### Review Findings
+
+- [x] [Review][Patch] AC5 violation — offline unlocks seeded AFTER dialogue_started fires [dialogue_runner.gd:29, dialogue_vm.gd:start()]
+- [x] [Review][Patch] Dead code `pass` block in start_dialogue for offline unlocks [dialogue_runner.gd:24-27]
+- [x] [Review][Patch] randf() used for voice frequency roll instead of RNG.stream("dialogue").randf() [dialogue_vm.gd:267]
+- [x] [Review][Patch] submit_choice with empty next_id doesn't advance cursor, silently stalls [dialogue_vm.gd:60-62]
+- [x] [Review][Patch] Branch condition empty next_id passes validator, causes runtime interrupted teardown [dialogue_graph.gd:116]
+- [x] [Review][Defer] speaker_id hardcoded "player" in CommitNode payload [dialogue_vm.gd:467] — deferred, Story 6.5 owns speaker resolution
+- [x] [Review][Defer] accept_item_drop no-match leaves cursor on item_drop node indefinitely [dialogue_vm.gd:91] — deferred, Story 6.4 owns UX response path
+
 ### Change Log
 
 - feat(dialogue): Story 6.1 Dialogue VM — all 9 node types (2026-05-17)
+- fix(dialogue): code-review patches for Story 6.1 — AC5 ordering, randf stream, submit_choice fallback, branch validator (2026-05-17)
