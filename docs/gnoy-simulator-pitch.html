@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gnoy Simulator — A satirical RPG about waking up inside the slop.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#EFE7D6;
+    --paper-2:#E6DCC7;
+    --ink:#1B1A18;
+    --ink-2:#2A2826;
+    --pencil:#4A4A48;
+    --pencil-2:#6E6A60;
+    --marker:#C2362B;
+    --marker-dim:#9E2C24;
+    --signal:#5C7A4F;
+    --mustard:#9C8A4A;
+    --void:#0E0D0B;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family: "Georgia", "Cormorant Garamond", "Times New Roman", serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .shell{
+    max-width:920px;
+    margin:0 auto;
+    background:var(--paper);
+    background-image:
+      radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size:5px 5px, 11px 11px;
+    background-position:0 0, 2px 2px;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.6),
+      0 30px 80px rgba(0,0,0,0.7);
+    position:relative;
+  }
+  /* paper edge wear */
+  .shell::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse at top, transparent 70%, rgba(0,0,0,0.10) 100%),
+      radial-gradient(ellipse at bottom, transparent 75%, rgba(0,0,0,0.08) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  /* utility */
+  .sans{ font-family:"Inter","Helvetica Neue", system-ui, sans-serif; }
+  .mono{ font-family:"Courier Prime","Courier New", ui-monospace, monospace; }
+  .label{
+    font-family:"Inter","Helvetica Neue", system-ui, sans-serif;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--marker);
+    font-weight:700;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:72px 56px 48px;
+    border-bottom:1px solid rgba(0,0,0,0.18);
+    position:relative;
+  }
+  .hero .meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--pencil-2);
+    margin-bottom:48px;
+  }
+  .hero .meta .left{ color:var(--marker); font-weight:700; }
+  .hero .meta .right{ color:var(--pencil); }
+
+  .hero .eyebrow{
+    font-family:"Inter",sans-serif;
+    font-size:13px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--pencil);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:"Georgia","Cormorant Garamond",serif;
+    font-weight:700;
+    font-size:clamp(60px, 9vw, 124px);
+    line-height:0.92;
+    letter-spacing:-0.03em;
+    margin:0 0 28px;
+    color:var(--ink);
+  }
+  .hero h1 .amp{
+    color:var(--marker);
+    font-style:italic;
+    font-weight:400;
+  }
+  .hero .tagline{
+    font-family:"Georgia",serif;
+    font-style:italic;
+    font-size:clamp(20px, 2.5vw, 26px);
+    line-height:1.45;
+    color:var(--ink-2);
+    max-width:680px;
+    margin:0 0 28px;
+  }
+  .hero .subline{
+    font-family:"Inter",sans-serif;
+    font-size:15px;
+    letter-spacing:0.04em;
+    color:var(--pencil);
+    max-width:620px;
+  }
+
+  .hero .stamp{
+    position:absolute;
+    top:48px; right:56px;
+    border:2px solid var(--marker);
+    color:var(--marker);
+    font-family:"Inter",sans-serif;
+    font-size:10px;
+    letter-spacing:0.24em;
+    padding:6px 12px;
+    text-transform:uppercase;
+    transform:rotate(6deg);
+    opacity:0.85;
+  }
+
+  /* ---------- Section frame ---------- */
+  section{
+    padding:56px 56px;
+    border-bottom:1px solid rgba(0,0,0,0.12);
+    position:relative;
+  }
+  section:last-of-type{ border-bottom:0; }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .section-label .line{
+    flex:0 0 40px;
+    height:2px;
+    background:var(--marker);
+  }
+  .section-label .num{
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.24em;
+    color:var(--pencil-2);
+  }
+  h2{
+    font-family:"Georgia",serif;
+    font-weight:700;
+    font-size:clamp(30px, 4vw, 42px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    margin:0 0 22px;
+    max-width:760px;
+  }
+  h2 em{ color:var(--marker); font-style:italic; }
+
+  p.lede{
+    font-size:18px;
+    line-height:1.65;
+    color:var(--ink-2);
+    max-width:720px;
+  }
+  p{
+    font-size:17px;
+    color:var(--ink-2);
+    max-width:720px;
+  }
+  p .accent{ color:var(--marker); font-style:italic; }
+
+  .dropcap::first-letter{
+    font-family:"Georgia",serif;
+    font-weight:700;
+    font-size:78px;
+    line-height:0.85;
+    float:left;
+    margin:6px 12px 0 0;
+    color:var(--marker);
+  }
+
+  /* ---------- DNA strip ---------- */
+  .dna{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:0;
+    margin-top:28px;
+    border-top:1px solid rgba(0,0,0,0.18);
+    border-bottom:1px solid rgba(0,0,0,0.18);
+  }
+  .dna div{
+    padding:18px 14px;
+    border-right:1px solid rgba(0,0,0,0.12);
+    font-family:"Inter",sans-serif;
+  }
+  .dna div:last-child{ border-right:0; }
+  .dna div small{
+    display:block;
+    font-size:10px;
+    letter-spacing:0.22em;
+    color:var(--pencil-2);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .dna div b{
+    font-family:"Georgia",serif;
+    font-weight:700;
+    font-size:17px;
+    color:var(--ink);
+    display:block;
+    line-height:1.2;
+  }
+  .dna div b .from{
+    font-family:"Inter",sans-serif;
+    font-weight:400;
+    font-size:11px;
+    color:var(--pencil-2);
+    display:block;
+    margin-top:2px;
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- Two columns ---------- */
+  .two-col{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:36px;
+    margin-top:24px;
+  }
+  @media (max-width:720px){
+    .two-col{ grid-template-columns:1fr; }
+    .hero{ padding:56px 28px 36px; }
+    .hero .stamp{ display:none; }
+    section{ padding:44px 28px; }
+  }
+
+  .card{
+    padding:0;
+  }
+  .card h3{
+    font-family:"Georgia",serif;
+    font-size:22px;
+    margin:0 0 8px;
+    color:var(--ink);
+    letter-spacing:-0.005em;
+  }
+  .card .tag{
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--marker);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .card p{
+    font-size:15.5px;
+    line-height:1.6;
+    color:var(--pencil);
+    margin:0;
+  }
+
+  /* ---------- Pull Quote ---------- */
+  .pullquote{
+    margin:48px auto;
+    max-width:720px;
+    text-align:center;
+    font-family:"Georgia",serif;
+    font-style:italic;
+    font-size:24px;
+    line-height:1.4;
+    color:var(--ink);
+    position:relative;
+    padding:18px 0;
+  }
+  .pullquote::before, .pullquote::after{
+    content:"";
+    display:block;
+    width:60px;
+    height:1px;
+    background:var(--marker);
+    margin:0 auto 22px;
+  }
+  .pullquote::after{ margin:22px auto 0; }
+  .pullquote cite{
+    display:block;
+    font-family:"Inter",sans-serif;
+    font-style:normal;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--pencil-2);
+    margin-top:14px;
+  }
+
+  /* ---------- Factions list ---------- */
+  .factions{
+    margin-top:20px;
+    border-top:1px solid rgba(0,0,0,0.18);
+  }
+  .faction{
+    display:grid;
+    grid-template-columns: 180px 1fr;
+    gap:24px;
+    padding:20px 0;
+    border-bottom:1px solid rgba(0,0,0,0.10);
+    align-items:baseline;
+  }
+  .faction .name{
+    font-family:"Georgia",serif;
+    font-size:24px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:-0.005em;
+  }
+  .faction .name small{
+    display:block;
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.22em;
+    color:var(--marker);
+    text-transform:uppercase;
+    margin-top:3px;
+    font-weight:700;
+  }
+  .faction p{
+    font-size:15.5px;
+    line-height:1.55;
+    color:var(--pencil);
+    margin:0;
+  }
+  @media (max-width:720px){
+    .faction{ grid-template-columns:1fr; gap:6px; }
+  }
+
+  /* ---------- Three Games ---------- */
+  .triptych{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    margin-top:28px;
+    border:1px solid rgba(0,0,0,0.18);
+  }
+  .triptych > div{
+    padding:24px;
+    border-right:1px solid rgba(0,0,0,0.14);
+    background:rgba(255,255,255,0.25);
+  }
+  .triptych > div:last-child{ border-right:0; }
+  .triptych h4{
+    font-family:"Georgia",serif;
+    font-size:20px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .triptych .meta{
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--marker);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .triptych p{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--pencil);
+    margin:0;
+  }
+  @media (max-width:720px){
+    .triptych{ grid-template-columns:1fr; }
+    .triptych > div{ border-right:0; border-bottom:1px solid rgba(0,0,0,0.14); }
+    .triptych > div:last-child{ border-bottom:0; }
+  }
+
+  /* ---------- Endings ---------- */
+  .endings{
+    margin-top:20px;
+    counter-reset:ending;
+  }
+  .ending{
+    display:grid;
+    grid-template-columns: 60px 1fr;
+    gap:18px;
+    padding:18px 0;
+    border-bottom:1px solid rgba(0,0,0,0.10);
+    align-items:baseline;
+  }
+  .ending::before{
+    counter-increment:ending;
+    content:counter(ending, upper-roman) ".";
+    font-family:"Georgia",serif;
+    font-size:24px;
+    color:var(--marker);
+    font-style:italic;
+  }
+  .ending h4{
+    font-family:"Georgia",serif;
+    font-size:21px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .ending p{
+    font-size:15px;
+    line-height:1.55;
+    color:var(--pencil);
+    margin:0;
+  }
+  .ending.sleep h4{ color:var(--marker); }
+
+  /* ---------- Deterioration sample ---------- */
+  .deterioration{
+    margin-top:32px;
+    background:var(--void);
+    color:var(--paper);
+    padding:28px 30px;
+    font-family:"Courier Prime","Courier New",monospace;
+    font-size:14.5px;
+    line-height:1.7;
+    border-left:3px solid var(--signal);
+    box-shadow:inset 0 0 60px rgba(0,0,0,0.6);
+    position:relative;
+  }
+  .deterioration::before{
+    content:"// SIGNAL — INTERIOR MONOLOGUE, 2:14 AM";
+    display:block;
+    color:var(--signal);
+    font-size:11px;
+    letter-spacing:0.22em;
+    margin-bottom:14px;
+  }
+  .deterioration .v{
+    color:#FFC629;
+    font-style:italic;
+  }
+  .deterioration .glitch{
+    color:var(--marker);
+    background:rgba(194,54,43,0.12);
+    padding:0 4px;
+  }
+  .deterioration .voice{
+    display:inline-block;
+    color:#7e9c6a;
+    font-style:italic;
+    margin-right:6px;
+  }
+
+  /* ---------- Bosses ---------- */
+  .roster{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:0 36px;
+    margin-top:24px;
+  }
+  .roster div{
+    padding:12px 0;
+    border-bottom:1px dotted rgba(0,0,0,0.18);
+    font-family:"Inter",sans-serif;
+    font-size:14px;
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    color:var(--pencil);
+  }
+  .roster div b{
+    color:var(--ink);
+    font-family:"Georgia",serif;
+    font-weight:700;
+    font-size:16px;
+  }
+  .roster div span{
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--marker);
+    font-weight:700;
+    white-space:nowrap;
+    align-self:center;
+  }
+  @media (max-width:720px){ .roster{ grid-template-columns:1fr; } }
+
+  /* ---------- Specs ---------- */
+  .specs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:0;
+    margin-top:22px;
+    border-top:1px solid rgba(0,0,0,0.2);
+  }
+  .specs div{
+    padding:18px 16px;
+    border-right:1px solid rgba(0,0,0,0.12);
+    border-bottom:1px solid rgba(0,0,0,0.12);
+    font-family:"Inter",sans-serif;
+  }
+  .specs div small{
+    display:block;
+    font-size:10px;
+    letter-spacing:0.24em;
+    color:var(--pencil-2);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .specs div b{
+    font-family:"Georgia",serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--ink);
+  }
+
+  /* ---------- Closing ---------- */
+  .closing{
+    text-align:center;
+    padding:72px 32px 84px;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.04) 100%),
+      var(--paper);
+    border-top:1px solid rgba(0,0,0,0.18);
+  }
+  .closing .strap{
+    font-family:"Georgia",serif;
+    font-style:italic;
+    font-size:clamp(22px, 3vw, 30px);
+    color:var(--ink);
+    max-width:640px;
+    margin:0 auto 20px;
+    line-height:1.4;
+  }
+  .closing .strap em{ color:var(--marker); }
+  .closing .when{
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.32em;
+    color:var(--pencil-2);
+    text-transform:uppercase;
+  }
+
+  .footer{
+    background:var(--void);
+    color:#7a7670;
+    text-align:center;
+    padding:20px;
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+  }
+  .footer .sig{ color:var(--signal); }
+  .footer .mark{ color:var(--marker); }
+</style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero">
+      <div class="meta">
+        <span class="left">// CASE FILE 001</span>
+        <span class="right">A Gnoy Simulator Press Brief — 2026</span>
+      </div>
+
+      <div class="stamp">Receipts ✓</div>
+
+      <div class="eyebrow">A satirical top-down RPG</div>
+      <h1>Gnoy<br>Simulator<span class="amp">.</span></h1>
+      <p class="tagline">
+        You wake up at 6:47 AM. The alarm is selling you something. You believe it.
+        <br>For now.
+      </p>
+      <p class="subline">
+        Disco Elysium's brain. Hotline Miami's hands. Persona's clock.
+        Shadow of Mordor's memory. Pokémon's camera.
+        One alt-Earth dimension where the slop, the Feed, and the ruling class
+        are the same machinery — and the people who notice get called crazy
+        on the news that night.
+      </p>
+    </header>
+
+    <!-- ===================== THE PITCH ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">I · THE PREMISE</span>
+      </div>
+      <h2>You start the game as the model citizen. You will not finish it that way.</h2>
+
+      <p class="lede dropcap">
+        Your name is up to you. Your job isn't. You clock into Greystone Data
+        Solutions, eat a fridge-cold McXyon's, and scroll the Feed on the
+        commute. Rent and seven slop subscriptions auto-deduct each month.
+        Your stats start with Body 4, Mind 2, Soul 2, Mouth 3, Ghost 1,
+        Gut 5, Signal 0 — the numerical shape of a wage-earning gnoy.
+        <span class="accent">You are, by every available metric, doing fine.</span>
+      </p>
+
+      <p>
+        Then a news event happens in front of you. You watch it happen.
+        You watch the same event on the Feed that night. They are not the
+        same event. The footage has been doctored. A coworker — Dave, whose
+        opinion you do not yet know matters — asks what you think.
+        <em>Whatever you answer permanently locks his fate.</em>
+        And the game, very quietly, begins.
+      </p>
+
+      <div class="dna">
+        <div><small>Dialogue</small><b>Disco Elysium<span class="from">depth, voices, DCs</span></b></div>
+        <div><small>Combat</small><b>Hotline Miami<span class="from">lethal, instant restart</span></b></div>
+        <div><small>Day Cycle</small><b>Persona<span class="from">slots, life sim</span></b></div>
+        <div><small>The Watchers</small><b>Shadow of Mordor<span class="from">but legally distinct</span></b></div>
+        <div><small>Camera</small><b>Pokémon / Zelda<span class="from">top-down 2D</span></b></div>
+      </div>
+    </section>
+
+    <!-- ===================== THE WORLD ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">II · THE WORLD</span>
+      </div>
+      <h2>An alt-Earth present day. <em>Familiar enough to hurt.</em></h2>
+
+      <p class="lede">
+        Twelve districts you can walk. <span class="accent">Slopside</span>,
+        where you live. <span class="accent">The Cubicle Belt</span>, where you work.
+        <span class="accent">The Plaza</span>, where the cameras are. The Vault
+        District. The Garden, where they live. The Pulpit Quarter. University Row.
+        The Hollow — eventually, your safehouse. The Compound — eventually,
+        the endgame.
+      </p>
+      <p>
+        Each district has a faction in charge of its weather. Each one has its
+        own palette, its own crowd ambience, its own Heat meter that tracks how
+        loud you've been there lately. Get loud in one and the others stay cool.
+        Rotating between them is how mature players survive.
+      </p>
+
+      <p style="margin-top:32px;"><span class="label">The Five Factions of the Xyoners</span></p>
+      <div class="factions">
+        <div class="faction">
+          <div class="name">The Trough <small>Food &amp; Land</small></div>
+          <p>The ones who feed you and own the dirt your apartment building sits on. McXyon's, SloppFlix-Eats, the agribusiness combines, the developers who priced out the neighborhood three mayors ago.</p>
+        </div>
+        <div class="faction">
+          <div class="name">The Feed <small>Media &amp; Algorithm</small></div>
+          <p>Trusted Anchors, Engagement Architects, "Fact" Checkers. They do not lie to you. They simply choose the camera angle, the soundbite, the next thing you see. The narrative is the weapon.</p>
+        </div>
+        <div class="faction">
+          <div class="name">The Pulpit <small>Ideology</small></div>
+          <p>The Prosperity Prophet. The Think Tank Sage. The Settlement Ideologue. Equal-opportunity satire — every faith and political faction has a profitable parasite, and the Pulpit collects them all.</p>
+        </div>
+        <div class="faction">
+          <div class="name">The Cage <small>Enforcement &amp; Surveillance</small></div>
+          <p>The people building a single shared faction file with your name on it. Operatives, Glowies, the contractor your boss reports to. They have a pre-existing rivalry with The Feed — that's useful, if you can survive long enough to use it.</p>
+        </div>
+        <div class="faction">
+          <div class="name">The Vault <small>Finance</small></div>
+          <p>Benevolent Billionaires. Debt Dealers. The Number Go Up Guy. They never become fully hostile, which is the most unsettling thing about them.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:32px;">
+        Above the factions sits <span class="accent">The Inner Ring</span> —
+        an unknown number of members, referred to in leaked documents only as
+        "The Arrangement." You discover their names by accident. One of them
+        has been feeding you intel the whole game to eliminate their rivals.
+        You will not know which one until you decide it's over.
+      </p>
+    </section>
+
+    <!-- ===================== PULL QUOTE ===================== -->
+    <div class="pullquote">
+      The closer you get to right, the more dangerous and discredited you become.
+      <cite>— The Truth Paradox · Design Pillar №1</cite>
+    </div>
+
+    <!-- ===================== THREE GAMES ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">III · THREE GAMES, ONE CHARACTER</span>
+      </div>
+      <h2>Investigator. Wageworker. Operative. <em>All you. All at once.</em></h2>
+      <p class="lede">
+        The same character sheet runs three different games stacked on top of
+        each other. You choose your hours.
+      </p>
+
+      <div class="triptych">
+        <div>
+          <div class="meta">The Investigator</div>
+          <h4>Corkboard. Red string. Stamp.</h4>
+          <p>
+            A diegetic conspiracy wall in your apartment. Pin a photo, drag
+            a string to another photo — a skill check fires. Critical
+            success gets you a solid line and a piece of hidden context.
+            Failure gets a dotted line you can still publish, at a cost.
+            Then the Dossier: choose <em>platform × framing × audience</em>
+            and watch the Credibility-vs-Heat meters dance before you commit.
+            No undo. Publication is permanent.
+          </p>
+        </div>
+        <div>
+          <div class="meta">The Wageworker</div>
+          <h4>Day slots. Rent. Cope.</h4>
+          <p>
+            Morning, Afternoon, Evening, optional risky Night. Snooze and
+            the Morning is silently gone. Sleep ticks the world forward
+            one day, deducts your slop subscriptions, fires the Politburo
+            simulation, partially restores Cope. Cancel a subscription
+            and you'll get an "anti-subscription extremism" Feed segment
+            about you inside the hour. Quitting your job is a major
+            milestone.
+          </p>
+        </div>
+        <div>
+          <div class="meta">The Operative</div>
+          <h4>Top-down. Lethal. Instant restart.</h4>
+          <p>
+            Real-time combat in the Hotline Miami school. Stats modify the
+            dials — Body, Hands, Gymmaxx — but never grant invincibility.
+            When you go down, you choose: <em>YIELD</em> (managed capture)
+            or <em>ATTEMPT ESCAPE</em>. Get captured and you wake up in a
+            Cage holding cell off-map. The world remembers every restart:
+            broken doors stay broken, corpses stay where they fell.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== THE AWAKENING ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">IV · THE AWAKENING</span>
+      </div>
+      <h2>It is not a level-up screen. <em>It is a slow tearing.</em></h2>
+      <p class="lede">
+        You have a hidden secondary progression called the Awakening Track,
+        from 1 to 10. It is never shown as a number. You will feel it.
+      </p>
+      <p>
+        As your Awakening rises, the world literally desaturates around you.
+        A post-process filter peels the brightness off Xyoner spaces — the
+        cheerful starts reading as <em>wrong</em>. At the same time, the
+        corporate music in those spaces audibly deteriorates across five tiers.
+        The McXyon's jingle, on day one, is perfect. By Awakening 5 it is
+        wobbly and slightly off-key. By 7 it is corrupted, skipping, glitching.
+        By 10 it has collapsed entirely into the endgame soundscape.
+      </p>
+      <p>
+        Your HUD glitches with it. Resistance UI elements — sticky notes,
+        red marker, hand-typed labels — begin replacing the corporate sans
+        and clean cards. The UI itself is awakening, and so are you.
+      </p>
+
+      <div class="deterioration" aria-label="An example of internal monologue during a high-Awakening conversation">
+        <span class="voice">[ Glowie Sense ]</span> <span class="v">He's wearing the wrong shoes for a Trough mid-level. Look at the laces.</span><br>
+        <span class="voice">[ Rabbit Hole ]</span> <span class="v">Greystone's parent company filed a Q3 disclosure two weeks before the Incident. Two. Weeks.</span><br>
+        <span class="voice">[ NPC Mode ]</span> <span class="v">Just smile. Just smile. <span class="glitch">don't break eye contact like that</span> just smile.</span><br>
+        <span class="voice">[ Cope ]</span> <span class="v">If you say it out loud the room will get smaller. The room is already small.</span><br>
+        <span class="voice">[ Yap Game ]</span> <span class="v">Push back. He's three sentences from contradicting himself. <span class="glitch">DC 14</span>.</span>
+      </div>
+
+      <p style="margin-top:32px;">
+        Twenty-four named Inner Voices live in your head — each with its own
+        font, color, and (when funded) voice cue. <em>Glowie Sense, Rabbit Hole,
+        Lore Depth, Yap Game, NPC Mode, Cope, Ratio, Clout.</em>
+        At low Awakening they are quiet. At high Awakening + high Fatigue
+        they become a full chorus, and you become an unbelievably sharp
+        investigator who can no longer pass for normal.
+        <em>Sharp or sociable. Pick one.</em>
+      </p>
+    </section>
+
+    <!-- ===================== THE LIVING WORLD ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">V · THE WORLD WATCHES BACK</span>
+      </div>
+      <h2>Three systems remember you. None of them are kind.</h2>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="tag">Player Dossier</div>
+          <h3>One faction file. Your whole life.</h3>
+          <p>
+            The Cage compiles a single shared faction file from operative
+            reports, leaks, your own publications, and Gnoym interrogations.
+            It tracks your Reach, your Awareness, the embarrassment you've
+            caused, and a build classifier that tags you as Ghost / Broadcast
+            / Hands / Grifter / Mixed. The OPSEC skill buys you delay; it
+            never buys you invisibility.
+          </p>
+        </div>
+        <div class="card">
+          <div class="tag">Politburo Simulation</div>
+          <h3>The ruling class runs on its own clock.</h3>
+          <p>
+            A weekly deterministic simulation of thirteen boss operatives,
+            five factions, and the Inner Ring — running whether you exist
+            or not. Bosses succeed each other. Blackmail debts come due.
+            Alliances form and break. Your actions feed into this sim as
+            <em>inputs</em>; the simulation's rules decide what happens next.
+          </p>
+        </div>
+        <div class="card">
+          <div class="tag">Reputation Web</div>
+          <h3>People remember your exact words.</h3>
+          <p>
+            Every individual Gnoym you talk to remembers what you said —
+            verbatim. They gossip with their neighbors. A rumor planted in
+            The Hollow takes in-game weeks to reach The Cubicle Belt. When
+            the Cage interrogates one of them, their personal memory of you
+            flows directly into your dossier. Silence registers as evasion.
+          </p>
+        </div>
+        <div class="card">
+          <div class="tag">Schrödinger's NPCs</div>
+          <h3>Dave is alive in three states until you speak.</h3>
+          <p>
+            Some characters' fate is locked by your first conversation with
+            them. Dave, your Greystone coworker, is the loud example. Answer
+            like a gnoy and he stays a gnoy forever — the quiet heartbreak of
+            the resistance. Answer honestly and he becomes your first recruit.
+            Answer too sharply and you learn what Greystone really is.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COMBAT / BUILDS ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">VI · WHO YOU BUILD</span>
+      </div>
+      <h2>Seven attributes. Twenty-four skills. <em>Forty talents.</em></h2>
+      <p class="lede">
+        <strong>BODY · MIND · SOUL · MOUTH · GHOST · GUT · SIGNAL.</strong>
+        Build a Ghost-Mode infiltrator and the Cage deploys thermal sensors.
+        Build a Broadcast-heavy Reach monster and the Feed builds a counter-narrative
+        twice as fast. The faction reads you, then responds. The game does
+        not have a "correct" build. It has builds the world has prepared a
+        response for.
+      </p>
+      <p>
+        Twenty-four named skills, four per attribute — Rabbit Hole, Doxcraft,
+        Glowie Sense, Yap Game, Rizz, Ratio, Ghost Mode, Normie Cosplay,
+        Receipts, OPSEC, Gymmaxx, Hands, Anti-Slop, Web, Ghost Protocol,
+        Signal Hijack. Forty talents across seven archetypes. Some are
+        mutually exclusive — Combat / Stealth / Information Warfare /
+        Network / Awakening / Economy / Wildcard.
+      </p>
+      <p style="margin-top:24px;">
+        Combat itself is honest. Lethal. Restart in under half a second when
+        you die. Six <em>signature satirical weapons</em> blur the line between
+        item and gag: the <strong>Evidence Brick</strong> stuns a normie for
+        four seconds, the <strong>Slop Bag</strong> distracts them for six
+        while the Cage ignores it entirely, the <strong>Megaphone</strong> can
+        cause low-level enforcers to defect, the <strong>Signal Jammer</strong>
+        cuts Cage backup for thirty seconds, the <strong>Camera Flash</strong>
+        blinds <em>and</em> generates Receipts-grade evidence, the
+        <strong>Fake ID Packet</strong> makes the NPCs verify each other
+        for ten seconds. Satire as tactics.
+      </p>
+    </section>
+
+    <!-- ===================== ROSTER ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">VII · THE CAST OF VILLAINS</span>
+      </div>
+      <h2>Thirteen operatives. Each one only dies once.</h2>
+      <p class="lede">
+        Some you beat with documents. Some with dialogue, in a multi-stage
+        composure-HP duel where wrong framings cost you evidence and Heat.
+        Some by handing them to a rival faction and letting them eat each
+        other. <em>Defeat is permanent.</em> The Politburo will fill the role
+        with a successor — but that individual is gone forever.
+      </p>
+      <div class="roster">
+        <div><b>The Fact Checker</b> <span>The Feed</span></div>
+        <div><b>The Trusted Anchor</b> <span>Dialogue Boss</span></div>
+        <div><b>The Engagement Architect</b> <span>The Feed</span></div>
+        <div><b>The Innovation Czar</b> <span>The Trough</span></div>
+        <div><b>The Soil Baron</b> <span>The Trough</span></div>
+        <div><b>The Revolving Door</b> <span>The Trough</span></div>
+        <div><b>The Prosperity Prophet</b> <span>The Pulpit</span></div>
+        <div><b>The Think Tank Sage</b> <span>The Pulpit</span></div>
+        <div><b>The Settlement Ideologue</b> <span>The Pulpit</span></div>
+        <div><b>The Intelligence Artisan</b> <span>The Cage</span></div>
+        <div><b>The Glowie</b> <span>Inside Your Crew</span></div>
+        <div><b>The Benevolent Billionaire</b> <span>The Vault</span></div>
+        <div><b>The Debt Dealer</b> <span>Dialogue Boss</span></div>
+        <div><b>The Number Go Up Guy</b> <span>The Vault</span></div>
+      </div>
+    </section>
+
+    <!-- ===================== ENDINGS ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">VIII · HOW IT ENDS</span>
+      </div>
+      <h2>Five endings. You decide when. <em>The game does not push you.</em></h2>
+      <p class="lede">
+        There is no boss-rush gate. There is no point-of-no-return cinematic.
+        When your Inner Ring Confidence is high enough and your disposition
+        axes are positioned, <em>you</em> commit. The game does not tell you
+        you're ready. The game does not tell you you're not.
+      </p>
+
+      <div class="endings">
+        <div class="ending">
+          <div>
+            <h4>The Public Reckoning</h4>
+            <p>You go public. The dam breaks. The Feed loses the narrative for forty-eight hours. Requires high Awake, high Rebel, high Reach.</p>
+          </div>
+        </div>
+        <div class="ending">
+          <div>
+            <h4>The Shadow Replacement</h4>
+            <p>You don't expose the Arrangement. You replace it. Same machinery, new hand on the lever. Requires high Rebel, low public footprint.</p>
+          </div>
+        </div>
+        <div class="ending">
+          <div>
+            <h4>The Burn</h4>
+            <p>You destroy what you can reach. You take no successor's seat. You will not be remembered correctly. Requires high Awake + Rebel, low Reach.</p>
+          </div>
+        </div>
+        <div class="ending">
+          <div>
+            <h4>The Long Game</h4>
+            <p>You walk away. You build something quiet. You touch grass. Requires high Soul, high Web, the Touch-Grass trait. The most patient ending.</p>
+          </div>
+        </div>
+        <div class="ending sleep">
+          <div>
+            <h4>The Sleep</h4>
+            <p>You give up. You re-subscribe to SloppFlix. You eat the slop. The credits roll over your apartment, exactly as you found it.<br><em>This is a real ending. The game does not punish you. The game does not nudge you away from it. It is structurally supported and seriously written, because some people, in the actual world, choose it.</em></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AESTHETIC ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">IX · WHAT IT LOOKS LIKE</span>
+      </div>
+      <h2>Satirical hyper-realism. <em>Two visual languages. One satire.</em></h2>
+      <p class="lede">
+        <strong>Xyoner spaces</strong> — the corporate office, the McXyon's,
+        the Plaza — are oversaturated, too vibrant, too clean. Geometric sans.
+        Polished cards. The aesthetic of a Series A pitch deck.
+      </p>
+      <p>
+        <strong>Resistance spaces</strong> — your apartment, the Hollow,
+        the underground forum — are aged paper, hand-typed, marker-and-pencil
+        annotated, sticky-noted, slightly crooked. The aesthetic of a private
+        investigator's bathroom.
+      </p>
+      <p>
+        The duality itself is the satire. Both share one component grammar
+        underneath. Both decay as you Awaken. The HUD does not narrate —
+        the world does.
+      </p>
+    </section>
+
+    <!-- ===================== SPECS ===================== -->
+    <section>
+      <div class="section-label">
+        <span class="line"></span>
+        <span class="num">X · TECHNICAL BRIEF</span>
+      </div>
+      <h2>The shape of the release.</h2>
+      <div class="specs">
+        <div><small>Engine</small><b>Godot 4.x</b></div>
+        <div><small>Camera</small><b>Top-down 2D</b></div>
+        <div><small>Platform</small><b>PC · Steam</b></div>
+        <div><small>Verified</small><b>Steam Deck</b></div>
+        <div><small>Post-launch</small><b>macOS · Switch</b></div>
+        <div><small>Word Count</small><b>~80–120k</b></div>
+        <div><small>Districts</small><b>3 VS / 12 full</b></div>
+        <div><small>Bosses</small><b>5–7 at launch</b></div>
+        <div><small>Endings</small><b>3 ship + 2 hidden</b></div>
+        <div><small>Development</small><b>Solo · vibe-coded</b></div>
+        <div><small>Save</small><b>Autosave + Ironman</b></div>
+        <div><small>Release</small><b>When it's done</b></div>
+      </div>
+    </section>
+
+    <!-- ===================== CLOSING ===================== -->
+    <div class="closing">
+      <p class="strap">
+        It's the game where giving up is a real ending, <br>
+        and <em>finishing it</em> is its own kind of grief.
+      </p>
+      <div class="when">Gnoy Simulator · Wishlist forthcoming · Have a great day ✓</div>
+    </div>
+
+    <div class="footer">
+      <span class="mark">// CASE FILE 001</span> &nbsp;·&nbsp;
+      Gnoy Simulator · An alt-Earth, alt-Earth-flavored RPG &nbsp;·&nbsp;
+      <span class="sig">// END TRANSMISSION</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gnoy Simulator — Build Dossier</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* ---------- Palette (from UX-DR1 / UX-DR2) ---------- */
+  :root{
+    /* Xyoner — corporate, oversaturated */
+    --xy-red:#E8302F;
+    --xy-yellow:#FFC629;
+    --xy-green:#00B488;
+    --xy-blue:#1F8FFF;
+    --xy-orange:#FF7A00;
+    --xy-bg:#FFFFFF;
+    --xy-surface:#F5F7FA;
+    --xy-text:#1A1A1A;
+    --xy-text2:#6B7280;
+
+    /* Resistance — handmade, aged paper */
+    --rs-marker:#C2362B;
+    --rs-mustard:#9C8A4A;
+    --rs-paper:#EFE7D6;
+    --rs-ink:#1B1A18;
+    --rs-pencil:#4A4A48;
+    --rs-concrete:#2A2826;
+    --rs-alert:#B23A2F;
+    --rs-signal:#5C7A4F;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--rs-concrete);
+    color:var(--rs-ink);
+    font-family: "Courier New", "Courier Prime", ui-monospace, monospace;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Xyoner Corporate Header ---------- */
+  .xy-shell{
+    max-width:1080px;
+    margin:0 auto;
+  }
+  .xy-banner{
+    background:linear-gradient(135deg,var(--xy-red) 0%, var(--xy-orange) 60%, var(--xy-yellow) 100%);
+    color:#fff;
+    padding:48px 32px 56px;
+    font-family: "Inter", "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    letter-spacing:-0.01em;
+    position:relative;
+    overflow:hidden;
+  }
+  .xy-banner::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 14px);
+    pointer-events:none;
+  }
+  .xy-banner .tag{
+    display:inline-block;
+    background:#fff;
+    color:var(--xy-red);
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:999px;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .xy-banner h1{
+    font-size:clamp(34px, 5.5vw, 56px);
+    margin:0 0 8px;
+    font-weight:800;
+  }
+  .xy-banner h1 .sub{
+    display:block;
+    font-size:0.5em;
+    font-weight:500;
+    opacity:0.92;
+    margin-top:6px;
+    letter-spacing:0.04em;
+  }
+  .xy-banner p{
+    max-width:780px;
+    margin:14px 0 0;
+    font-size:17px;
+    opacity:0.96;
+  }
+  .xy-disclaimer{
+    background:var(--xy-yellow);
+    color:var(--xy-text);
+    font-family:"Inter", system-ui, sans-serif;
+    font-size:13px;
+    padding:10px 32px;
+    font-weight:600;
+    border-top:2px solid #00000010;
+    border-bottom:2px solid #00000010;
+    text-align:center;
+  }
+  .xy-disclaimer .stamp{
+    display:inline-block;
+    color:var(--xy-red);
+    transform:rotate(-2deg);
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:800;
+    border:2px solid var(--xy-red);
+    padding:2px 10px;
+    margin-right:10px;
+  }
+
+  /* ---------- Resistance "Notebook" ---------- */
+  .notebook{
+    max-width:1080px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+    background:var(--rs-paper);
+    background-image:
+      radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
+    background-size:6px 6px, 13px 13px;
+    background-position:0 0, 3px 3px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    position:relative;
+  }
+  .notebook::before{
+    /* red margin line */
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    left:64px;
+    width:2px;
+    background:var(--rs-marker);
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .notebook::after{
+    /* punch holes */
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    left:24px;
+    width:14px;
+    background:
+      radial-gradient(circle at 7px 60px,  var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 220px, var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 380px, var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 540px, var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 700px, var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 860px, var(--rs-concrete) 5px, transparent 6px),
+      radial-gradient(circle at 7px 1020px,var(--rs-concrete) 5px, transparent 6px);
+    background-repeat:repeat-y;
+    background-size:14px 960px;
+    pointer-events:none;
+  }
+
+  .notebook-inner{ padding-left:64px; }
+
+  .preamble{
+    font-size:16px;
+    background:rgba(255,255,255,0.55);
+    border-left:6px solid var(--rs-marker);
+    padding:18px 22px;
+    margin-bottom:36px;
+    transform:rotate(-0.15deg);
+    box-shadow:1px 2px 0 rgba(0,0,0,0.05);
+  }
+  .preamble strong{ color:var(--rs-marker); }
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 36px;
+  }
+  .chip{
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:12px;
+    padding:5px 10px;
+    border-radius:4px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    border:1px solid rgba(0,0,0,0.15);
+    background:#fff;
+  }
+  .chip.gameplay{ background:#fff3d4; }
+  .chip.world  { background:#dceee0; }
+  .chip.systems{ background:#dde6f4; }
+  .chip.story  { background:#f6d9d4; }
+  .chip.polish { background:#eee0c6; }
+  .chip.art    { background:#f4e1f0; }
+
+  /* ---------- Epic Card ---------- */
+  .epic{
+    background:#fffdf6;
+    border:1px solid rgba(0,0,0,0.12);
+    box-shadow:
+      2px 3px 0 rgba(0,0,0,0.05),
+      0 10px 24px rgba(0,0,0,0.07);
+    margin:0 0 36px;
+    padding:26px 28px 24px;
+    position:relative;
+    transform:rotate(-0.05deg);
+  }
+  .epic:nth-child(odd){ transform:rotate(0.08deg); }
+  .epic:nth-child(3n){ transform:rotate(-0.12deg); }
+
+  .epic .pin{
+    position:absolute;
+    top:-10px; left:24px;
+    width:20px; height:20px;
+    background:radial-gradient(circle at 35% 35%, #ff7e7a 0%, #c12c2a 60%, #6a0f0e 100%);
+    border-radius:50%;
+    box-shadow:1px 3px 4px rgba(0,0,0,0.35);
+  }
+
+  .epic .num{
+    display:inline-block;
+    background:var(--rs-ink);
+    color:var(--rs-paper);
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .epic .num.art{ background:var(--rs-marker); }
+
+  .epic h2{
+    font-family:"Georgia", "Times New Roman", serif;
+    font-size:26px;
+    margin:2px 0 6px;
+    color:var(--rs-ink);
+    letter-spacing:-0.005em;
+  }
+  .epic h2 .stamp{
+    display:inline-block;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--rs-marker);
+    border:2px solid var(--rs-marker);
+    padding:2px 8px;
+    border-radius:3px;
+    transform:rotate(-3deg);
+    margin-left:10px;
+    vertical-align:middle;
+    opacity:0.85;
+  }
+
+  .epic .one-liner{
+    font-family:"Georgia",serif;
+    font-style:italic;
+    color:var(--rs-pencil);
+    margin:0 0 14px;
+    font-size:15.5px;
+  }
+
+  .epic p{ margin:10px 0; font-size:15px; }
+  .epic .label{
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--rs-marker);
+    font-weight:700;
+    margin-right:6px;
+  }
+  .epic .scope{
+    margin-top:14px;
+    padding:10px 14px;
+    background:rgba(156,138,74,0.12);
+    border-left:3px solid var(--rs-mustard);
+    font-size:14px;
+    color:var(--rs-pencil);
+  }
+  .epic .scope b{ color:var(--rs-ink); }
+
+  /* sticky note variant for Epic A */
+  .epic.art-track{
+    background:#fff6d2;
+    border:1px dashed var(--rs-marker);
+    transform:rotate(0.4deg);
+  }
+  .epic.art-track .num{ background:var(--rs-marker); }
+
+  /* footer */
+  footer{
+    color:var(--rs-paper);
+    text-align:center;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:12px;
+    padding:24px;
+    opacity:0.75;
+  }
+  footer .pirate{ color:var(--rs-signal); font-weight:700; letter-spacing:0.16em; }
+
+  @media (max-width:640px){
+    .notebook::before{ left:40px; }
+    .notebook::after{ left:12px; }
+    .notebook-inner{ padding-left:44px; }
+    .xy-banner{ padding:36px 22px 44px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="xy-shell">
+    <header class="xy-banner">
+      <span class="tag">McXyon's Internal Memo — Public Comms Approved</span>
+      <h1>
+        Gnoy Simulator
+        <span class="sub">Production Build Overview — A Plain-English Tour of How the Game Gets Made</span>
+      </h1>
+      <p>
+        Welcome, friend. This is the official corporate-approved™ summary of the
+        fourteen big chunks of work (plus one art-production track) that, when stitched
+        together, become the game on your screen. Read it with a Big Slop in hand. Have a great day.
+      </p>
+    </header>
+
+    <div class="xy-disclaimer">
+      <span class="stamp">Receipts</span>
+      Below this line, the Resistance gets the floor. What follows is the real document.
+    </div>
+  </div>
+
+  <main class="notebook">
+    <div class="notebook-inner">
+
+      <div class="preamble">
+        <strong>What this is.</strong> Building a video game is a lot like building a house —
+        you can't paint the walls before you pour the foundation, and you can't hang
+        art before there are walls. Gnoy Simulator is being assembled in
+        <strong>15 chunks</strong> we call <em>epics</em>. Each epic delivers one major
+        thing the player can actually feel — a working day cycle, a fight, a conversation,
+        an investigation, a district to walk through.
+        <br><br>
+        Some epics are <em>foundations</em> (you'll never see them directly, but nothing works
+        without them). Others are <em>moments</em> (the things that show up in a trailer).
+        The list below is roughly the order they get built in, because each one depends
+        on the ones above it.
+      </div>
+
+      <div class="legend">
+        <span class="chip systems">Foundations &amp; Systems</span>
+        <span class="chip gameplay">Gameplay Loops</span>
+        <span class="chip world">World &amp; Living Simulation</span>
+        <span class="chip story">Story, Bosses &amp; Opening</span>
+        <span class="chip polish">Polish, Endings &amp; Accessibility</span>
+        <span class="chip art">Art Production</span>
+      </div>
+
+      <!-- ============ EPIC 1 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 1 · Foundations &amp; Systems</span>
+        <h2>Foundation, Scaffolding &amp; RPG Core</h2>
+        <p class="one-liner">"Turn the lights on and put the bones in the body."</p>
+        <p>
+          Before anything else, the game needs a skeleton. This epic creates the
+          project itself: the empty Godot project, the save/load system, and the
+          underlying RPG numbers — the <b>7 attributes</b> (Body, Mind, Soul, Mouth,
+          Ghost, Gut, Signal), <b>24 skills</b>, <b>40 talents</b>, and the
+          <b>Awakening Track</b> that measures how "red-pilled" the player has become.
+          It also wires in the skill-check engine (the thing that rolls dice when the
+          player tries to do something), keyboard controls, and the minimal HUD frame
+          you see on screen at all times.
+        </p>
+        <p class="scope">
+          <span class="label">Why it's first:</span>
+          Every other epic — combat, dialogue, investigation — reads from these numbers.
+          Build this wrong and the whole game wobbles.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 2 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 2 · Gameplay Loops</span>
+        <h2>The Day Cycle &amp; Survival Loop</h2>
+        <p class="one-liner">"Wake up. Slop. Work. Sleep. Repeat — until you stop."</p>
+        <p>
+          This is where the game becomes a <b>life</b>. Each day is broken into
+          Morning / Afternoon / Evening / Night slots, and the player has to <em>spend</em>
+          those slots — investigating, working their soul-crushing job at Greystone,
+          recovering, or going out at night to take risks. Hit snooze and the
+          Morning is silently gone. Rent and slop subscriptions auto-deduct from the
+          bank account every month. Cancelling a subscription becomes a small ceremony
+          (with three retention-screen guilt trips) and is rewarded with an Awakening tick.
+          The "slop economy bleeding you dry" feeling lives in this epic.
+        </p>
+        <p class="scope">
+          <span class="label">Headline moment:</span>
+          Cancelling SloppFlix for the first time, getting an
+          "anti-subscription extremism" Feed segment about you within the hour.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 3 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 3 · Gameplay Loops</span>
+        <h2>Combat (Hotline Miami DNA)</h2>
+        <p class="one-liner">"Top-down, lethal, instant restart. Stats don't make you invincible."</p>
+        <p>
+          The fighting layer. Combat is fast, brutally lethal, and restarts in under
+          half a second when you die — but the world remembers (broken doors stay
+          broken, corpses stay where they fell). Your stats tweak the dials
+          (Body = how many hits you survive, Hands = how much damage you deal) but
+          never grant invincibility. When you go down at zero Body, you choose:
+          <b>YIELD</b> (guaranteed capture, manageable consequences) or
+          <b>ATTEMPT ESCAPE</b> (a fast risky check).
+          The enemy faction reads your fighting style and adapts — go stealth-only
+          and they bring thermal sensors next time.
+        </p>
+        <p class="scope">
+          <span class="label">Signature satire:</span>
+          Six "weaponized objects" that change the game — an Evidence Brick stuns
+          a normie for 4 seconds, a Slop Bag distracts them for 6, a Megaphone can
+          actually make low-level enforcers defect.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 4 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 4 · Gameplay Loops</span>
+        <h2>Equipment &amp; Crafting</h2>
+        <p class="one-liner">"What you wear is who the world sees."</p>
+        <p>
+          Fifteen equipment slots (head, face, hands, accessories, weapons, etc.)
+          across five quality tiers — from gnoy-grade fast fashion to gear seized
+          from Xyoner operatives. The interesting part is the <b>set bonuses</b>:
+          dressing fully civilian gives you a "blends in" buff and faster Heat decay.
+          Dressing fully tactical makes you a combat monster but kills your social
+          viability — nobody talks to a guy in body armor. "Press Cover" gets you
+          through Cage checkpoints. The outfit IS the disguise.
+        </p>
+        <p class="scope">
+          <span class="label">Crafting:</span>
+          Resistance gear isn't bought — it's built, in homebase, by you or
+          your Crafter recruit, from scrap.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 5 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 5 · Gameplay Loops</span>
+        <h2>Investigation — The Three-Layer Conspiracy Wall</h2>
+        <p class="one-liner">"Pin the photo. Draw the string. Stamp it. Publish it."</p>
+        <p>
+          The heart of the game. Three nested screens:
+          <b>Physical Board</b> — a literal corkboard in your apartment where you pin
+          evidence and drag red string between connections (each string fires a
+          skill check; succeed and the line is solid, fail and it's a dotted line
+          you can still publish at a Credibility cost).
+          <b>Dossier Interface</b> — your desk, where you stamp evidence Verified /
+          Uncertain / Planted and build a publication: <em>which platform, which
+          framing angle, which audience</em>. You see a live preview of how much
+          Credibility you'll gain and how much Heat you'll bring down on yourself.
+          <b>Thought Cabinet</b> — mental threads that cost time-slots to chew on
+          and re-interpret evidence you already have.
+        </p>
+        <p class="scope">
+          <span class="label">The Truth Paradox:</span>
+          The <em>more correct</em> your investigation gets, the more dangerous
+          and discredited you become. The game does not tell you when you're wrong;
+          the Cage plants false leads on purpose.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 6 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 6 · Gameplay Loops</span>
+        <h2>Dialogue System (Disco-Elysium-Tier)</h2>
+        <p class="one-liner">"Every word goes into a file somewhere."</p>
+        <p>
+          Conversations are first-class gameplay. You'll see the difficulty of
+          each line up front (<em>"Yap Game DC 14 — Push back on his framing"</em>)
+          but never the consequence. Inside your head, up to <b>24 named Inner Voices</b>
+          — Glowie Sense, Rabbit Hole, Lore Depth, Yap Game — chime in with their own
+          fonts, colors, and (eventually) voice cues. As you Awaken and Fatigue rises,
+          they get louder and more chaotic.
+          You can drop physical evidence from your pocket onto the conversation
+          (a photo, a burner phone) to unlock lines you couldn't otherwise say.
+          Two bosses — the Trusted Anchor and the Debt Dealer — are fought
+          entirely through dialogue, with a "Composure HP" bar.
+        </p>
+        <p class="scope">
+          <span class="label">Weaponized log:</span>
+          Every conversation is recorded and searchable.
+          NPCs quote you back weeks later. The Cage interrogates the people you
+          spoke to and your exact words flow into their dossier on you.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 7 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 7 · World &amp; Living Simulation</span>
+        <h2>The Three Tracking Systems</h2>
+        <p class="one-liner">"The world watches back."</p>
+        <p>
+          The hardest engineering work in the project. Three legally and architecturally
+          distinct systems that together make the world feel alive:
+          (1) <b>Player Dossier</b> — a single faction-wide file the Cage assembles
+          on you from operative reports, leaks, and interrogations.
+          (2) <b>Politburo Simulation</b> — a weekly ticking simulation of the
+          ruling class that runs <em>whether or not you exist</em>. Bosses succeed
+          each other, betrayals happen, blackmail debts come due.
+          (3) <b>Reputation Web</b> — each individual person remembers what you said
+          to them and gossips with their neighbors. When the Cage interrogates one of
+          them, their verbatim memory of you flows into your dossier.
+        </p>
+        <p class="scope">
+          <span class="label">Why it matters:</span>
+          This is what makes the world feel like it has its own life,
+          and why two playthroughs can produce wildly different stories.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 8 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 8 · World &amp; Living Simulation</span>
+        <h2>Recruitment &amp; Homebase</h2>
+        <p class="one-liner">"Build a cell. Hope nobody breaks."</p>
+        <p>
+          The base-building / party arc. You start in a sad apartment.
+          Through side quests and dialogue puzzles you recruit specialists —
+          <b>Researcher, Broadcaster, Crafter, Medic, Quartermaster, Analyst, Handler</b>.
+          Your home grows: <b>Apartment → Office → Underground HQ → Distributed Cell Network</b>.
+          Loyalty is an ongoing resource that decays from neglect and broken promises.
+          Recruits can be captured in raids, broken under interrogation, or quietly
+          turned into Glowies (informants). Once recruits are gone, they're gone.
+        </p>
+        <p class="scope">
+          <span class="label">Beat:</span>
+          The Hollow district becomes your safehouse network.
+          A high-loyalty Broadcaster unlocks pirate radio income.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 9 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 9 · World &amp; Living Simulation</span>
+        <h2>World &amp; Districts</h2>
+        <p class="one-liner">"Twelve neighborhoods. Each one watches you differently."</p>
+        <p>
+          The map. Twelve districts, each color-coded by faction influence —
+          Slopside (Trough), the Cubicle Belt (Cage / mixed), the Plaza (Feed),
+          the Vault District, the Garden (rich), the Pulpit Quarter, the Hollow
+          (your safehouse), all the way up to The Compound (endgame).
+          <b>Heat is tracked per district</b>: get loud in the Plaza and the Plaza heats
+          up, but Slopside stays cool. Rotating between districts is core gameplay.
+          Sneak routes only appear once Ghost Mode skill crosses a threshold.
+          The map UI itself reveals more layers as you Awaken.
+        </p>
+        <p class="scope">
+          <span class="label">Vertical Slice:</span>
+          The first playable demo ships <b>three districts</b> —
+          Slopside, the Cubicle Belt, and the Plaza — covering work, home, and broadcast.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 10 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 10 · Story, Bosses &amp; Opening</span>
+        <h2>Quest System &amp; the Endgame Trigger</h2>
+        <p class="one-liner">"You decide when you have enough."</p>
+        <p>
+          Seven kinds of quests run in parallel — the Main Quest ("The Arrangement"),
+          13 Faction Boss Investigations, Recruit Personal Quests, Emergent Politburo
+          Events (the sim spits these out), Reputation Web side quests, Awakening Track
+          story beats, and District Liberation Goals.
+          There are <b>no quest markers by default</b>. You find leads by overhearing
+          conversations, reading forum posts, getting tips from your Analyst, or
+          stumbling onto dead drops.
+          Your Quest Journal is written like a paper notebook in your character's
+          own voice — not a checklist. When <b>Inner Ring Confidence</b> is high enough,
+          you choose to trigger the endgame. The game does not push you there.
+        </p>
+        <p class="scope">
+          <span class="label">Accessibility:</span>
+          Markers Mode (optional, off by default) and Awakening Hints exist for players
+          who want them.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 11 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 11 · Story, Bosses &amp; Opening</span>
+        <h2>Boss Investigations</h2>
+        <p class="one-liner">"Expose them. Permanently."</p>
+        <p>
+          Each major Xyoner operative — the Fact Checker, the Trusted Anchor,
+          the Debt Dealer, the Innovation Czar, the Pulpit's rotating-mask boss,
+          the Glowie hiding inside your own recruits — is a multi-stage investigation
+          arc with their own defeat condition. Some you beat with documents (Innovation
+          Czar via leaked R&amp;D papers); some with dialogue duels (Trusted Anchor);
+          some via cross-faction manipulation (handing the Number Go Up Guy to the Cage).
+          When a boss falls, the Politburo simulation fills the role with a successor —
+          but that individual person is gone forever.
+        </p>
+        <p class="scope">
+          <span class="label">Solo-dev scope:</span>
+          5–7 bosses ship at full launch (the Pulpit consolidates 4 sub-bosses into
+          one rotating-mask figure). The remaining 6–8 stay on the design wall as
+          "North Star" content if the project ever scales.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 12 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 12 · Story, Bosses &amp; Opening</span>
+        <h2>The Opening Sequence &amp; Schrödinger's Dave</h2>
+        <p class="one-liner">"A Perfectly Normal Morning."</p>
+        <p>
+          The first 15 minutes of the game, and the most carefully scripted sequence
+          in the whole project. The player wakes up, snoozes (and silently loses the
+          Morning slot — first lesson, no tutorial popup), eats slop from the fridge,
+          scrolls the Feed, commutes past a billboard, clocks into Greystone Data
+          Solutions, and has their first conversation with <b>Dave</b>.
+          Dave is a "Schrödinger's NPC": the first answer you give him <em>permanently</em>
+          locks his arc. Default gnoy answer = Dave stays a gnoy forever (the
+          heartbreak of resistance). Real answer = Dave becomes your first Recruit.
+          Too-awakened answer = Dave reports you to the Cage, and you discover
+          Greystone was a Cage front all along.
+        </p>
+        <p class="scope">
+          <span class="label">Goal:</span>
+          By the end of opening, the player has been silently introduced to time-slots,
+          slop damage, financial pressure, conversation consequences, the evidence board,
+          and Feed-vs-reality — without a single tooltip.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 13 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 13 · Polish, Endings &amp; Accessibility</span>
+        <h2>Theme System, Awakening Filter &amp; Music Deterioration</h2>
+        <p class="one-liner">"As you wake up, the world sounds wrong."</p>
+        <p>
+          The aesthetic spine. Two visual languages share one component library:
+          <b>Xyoner</b> (corporate, oversaturated, cheerful, geometric sans) and
+          <b>Resistance</b> (handmade, typewritten, aged paper, marker-and-pencil).
+          The duality itself is the satire.
+          As your Awakening Track climbs, a post-process shader gradually
+          desaturates the world — the bright corporate colors start reading as
+          <em>wrong</em>. At the same time, the corporate music in Xyoner spaces
+          <b>audibly deteriorates</b> across 5 tiers — a clean jingle becomes
+          slightly off-key, then wobbly, then skipping, then full corrupted noise
+          by Awakening level 7. The HUD itself glitches and decays. Resistance
+          UI elements grow into your homebase.
+        </p>
+        <p class="scope">
+          <span class="label">Signature moment:</span>
+          The first time the McXyon's commercial in the background warbles for half
+          a second and the player's head snaps up.
+        </p>
+      </section>
+
+      <!-- ============ EPIC 14 ============ -->
+      <section class="epic">
+        <span class="pin"></span>
+        <span class="num">Epic 14 · Polish, Endings &amp; Accessibility</span>
+        <h2>Endings, Polish, Localization &amp; Accessibility</h2>
+        <p class="one-liner">"Five ways out (three at launch). Plus making it actually shippable."</p>
+        <p>
+          The closing epic. Five possible endings exist as design (Public Reckoning,
+          Shadow Replacement, The Burn, The Long Game, The Sleep). Solo-dev launch
+          ships three: <b>Public Reckoning</b> (you go public, the dam breaks),
+          <b>The Long Game</b> (you walk away to live a meaningful private life), and
+          <b>The Sleep</b> (you give up, take your slop, and let the gnoy reabsorb you —
+          a fully supported, non-punished ending).
+          This epic also lands accessibility (WCAG AA — text scaling, dyslexia font,
+          color-blind cues, subtitles, hold-to-confirm, full keyboard nav, screen-reader
+          layer), localization-readiness (every string externalized, fonts that handle
+          CJK / Arabic / Hebrew), final tone-calibration playtests, IP / legal review,
+          and Steam Deck Verified certification at 60fps on minimum-spec hardware.
+        </p>
+        <p class="scope">
+          <span class="label">Sleep ending matters:</span>
+          The game is designed so that giving up <em>is</em> a valid ending.
+          Marketing briefs reviewers on this — it's not a failure state.
+        </p>
+      </section>
+
+      <!-- ============ EPIC A ============ -->
+      <section class="epic art-track">
+        <span class="pin"></span>
+        <span class="num art">Epic A · Art Production (Parallel Track)</span>
+        <h2>Art Production — Sprites, Tilesets, UI, Portraits, Icons
+          <span class="stamp">runs alongside everything</span>
+        </h2>
+        <p class="one-liner">"Make the screen look like the design doc said it would."</p>
+        <p>
+          The fifteenth track, and the only one that uses letters instead of numbers
+          because it runs <em>in parallel</em> with all the others. Epic A doesn't
+          write code — it produces the actual pictures: the player's wageworker sprite
+          (idle and walk animations), Dave's three possible sprite variants, the Fact
+          Checker boss sprite set, generic gnoy civilians, named NPCs, the apartment
+          interior, the Greystone office, broadcast row, every HUD element, every UI
+          surface, every portrait, every skill and item icon. Built through carefully
+          locked image-generation pipelines (gpt-image-2, pixel-snap, atlas packing),
+          shipped to canonical art folders for the code epics to consume.
+        </p>
+        <p class="scope">
+          <span class="label">Why parallel:</span>
+          Code epics can ship using "smoke-test" placeholder art and still validate.
+          Epic A's job is to backfill the real, art-direction-locked assets in time
+          for the Vertical Slice to look the way the design document promised.
+        </p>
+      </section>
+
+      <div class="preamble" style="margin-top:48px;background:rgba(92,122,79,0.12);border-left-color:var(--rs-signal);transform:rotate(0.2deg);">
+        <strong style="color:var(--rs-signal);letter-spacing:0.06em;">END OF DOSSIER.</strong>
+        Each epic above is broken down further into 5–15 individual <em>stories</em> —
+        each story is one shippable piece of work, small enough to build and test in
+        a day or two. The full sprint plan tracks all 134 of them. This document is
+        the bird's-eye view; the sprint plan is the floor plan.
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span class="pirate">// PIRATE BROADCAST ON-AIR //</span>
+    &nbsp; Gnoy Simulator build overview &nbsp;·&nbsp; Generated from
+    <code>_bmad-output/planning-artifacts/epics.md</code> &nbsp;·&nbsp; 15 epics / 134 stories
+  </footer>
+
+</body>
+</html>

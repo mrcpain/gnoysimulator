@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GNOY SIMULATOR™ — Now With 200% More Slop!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ketchup:#E8302F;
+    --mustard:#FFC629;
+    --pickle:#5C7A4F;
+    --slop-orange:#FF7A00;
+    --bun:#F0C870;
+    --grease:#D49E2E;
+    --neon-blue:#1F8FFF;
+    --feed-pink:#FF3DA1;
+    --ink:#101010;
+    --paper:#FFF8E6;
+    --wellness:#00B488;
+    --receipt:#fefcf4;
+    --crack:#C2362B;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(ellipse at 20% 10%, #ffe0a3 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, #ffd1a1 0%, transparent 55%),
+      var(--bun);
+    color:var(--ink);
+    font-family: "Impact", "Arial Black", "Helvetica Neue", system-ui, sans-serif;
+    overflow-x:hidden;
+  }
+
+  .page{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 16px 80px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    margin-top:18px;
+    background:
+      repeating-linear-gradient(135deg, var(--ketchup) 0 28px, var(--mustard) 28px 56px);
+    border:6px solid var(--ink);
+    border-radius:18px;
+    padding:0;
+    position:relative;
+    overflow:hidden;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .hero-inner{
+    background:#fffbe6;
+    margin:18px;
+    border:4px dashed var(--ink);
+    border-radius:12px;
+    padding:36px 28px 30px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .kicker{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--mustard);
+    font-family:"Impact",sans-serif;
+    font-size:14px;
+    letter-spacing:0.22em;
+    padding:6px 14px;
+    border-radius:4px;
+    transform:rotate(-2deg);
+  }
+  .hero h1{
+    font-family:"Impact","Arial Black",sans-serif;
+    font-size:clamp(54px, 11vw, 132px);
+    line-height:0.9;
+    margin:16px 0 6px;
+    letter-spacing:-0.02em;
+    color:var(--ketchup);
+    -webkit-text-stroke:3px var(--ink);
+    text-shadow:
+      6px 6px 0 var(--mustard),
+      9px 9px 0 var(--ink);
+  }
+  .hero .trademark{
+    font-size:0.28em;
+    vertical-align:super;
+    color:var(--ink);
+    -webkit-text-stroke:0;
+    text-shadow:none;
+  }
+  .hero h2{
+    font-family:"Impact",sans-serif;
+    font-size:clamp(20px, 3.5vw, 36px);
+    margin:8px 0 14px;
+    color:var(--ink);
+    letter-spacing:0.02em;
+    transform:skewY(-1deg);
+  }
+  .hero .yum{
+    display:inline-block;
+    background:var(--mustard);
+    border:3px solid var(--ink);
+    padding:6px 14px;
+    border-radius:8px;
+    transform:rotate(2deg);
+    font-size:16px;
+    color:var(--ink);
+    margin-top:6px;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .starburst{
+    position:absolute;
+    top:-30px; right:-30px;
+    width:170px; height:170px;
+    background:var(--mustard);
+    border:5px solid var(--ink);
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:"Impact",sans-serif;
+    font-size:20px;
+    line-height:1;
+    padding:14px;
+    transform:rotate(15deg);
+    clip-path:polygon(
+      50% 0%, 61% 19%, 81% 12%, 78% 33%, 100% 35%,
+      87% 50%, 100% 65%, 78% 67%, 81% 88%, 61% 81%,
+      50% 100%, 39% 81%, 19% 88%, 22% 67%, 0% 65%,
+      13% 50%, 0% 35%, 22% 33%, 19% 12%, 39% 19%);
+    box-shadow:none;
+  }
+  .starburst small{ display:block; font-size:13px; margin-top:4px; color:var(--ketchup);}
+
+  .hero .ctas{
+    margin-top:22px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--ketchup);
+    color:#fff;
+    font-family:"Impact",sans-serif;
+    font-size:22px;
+    letter-spacing:0.04em;
+    padding:14px 26px;
+    border:4px solid var(--ink);
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:5px 5px 0 var(--ink);
+    transition:transform .08s;
+    cursor:pointer;
+  }
+  .btn:hover{ transform:translate(-1px,-1px); }
+  .btn.alt{ background:var(--neon-blue); }
+  .btn.green{ background:var(--wellness); }
+
+  /* ---------- Pull Quotes ---------- */
+  .quotes{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px;
+    margin:32px 0;
+  }
+  .q{
+    background:#fff;
+    border:4px solid var(--ink);
+    border-radius:10px;
+    padding:14px 16px;
+    box-shadow:4px 4px 0 var(--ink);
+    transform:rotate(-1deg);
+    font-family:"Arial Black",sans-serif;
+    font-size:15px;
+  }
+  .q:nth-child(2){ transform:rotate(1.5deg); background:var(--mustard); }
+  .q:nth-child(3){ transform:rotate(-0.6deg); background:var(--feed-pink); color:#fff; }
+  .q:nth-child(4){ transform:rotate(2deg); background:var(--neon-blue); color:#fff; }
+  .q .stars{
+    color:var(--mustard);
+    -webkit-text-stroke:1.5px var(--ink);
+    font-size:20px;
+    letter-spacing:0.1em;
+    margin-bottom:6px;
+  }
+  .q:nth-child(2) .stars{ color:#fff; }
+  .q cite{
+    display:block;
+    font-style:normal;
+    font-family:"Impact",sans-serif;
+    font-size:12px;
+    letter-spacing:0.12em;
+    margin-top:8px;
+    opacity:0.85;
+  }
+
+  /* ---------- Section heading ---------- */
+  .section-head{
+    margin:48px auto 18px;
+    text-align:center;
+    position:relative;
+  }
+  .section-head h3{
+    display:inline-block;
+    font-family:"Impact",sans-serif;
+    font-size:clamp(28px, 5vw, 48px);
+    color:#fff;
+    background:var(--ink);
+    padding:8px 22px;
+    transform:rotate(-1.5deg);
+    letter-spacing:0.04em;
+    box-shadow:5px 5px 0 var(--ketchup);
+  }
+  .section-head .sub{
+    display:block;
+    margin-top:14px;
+    font-family:"Arial Black",sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    transform:rotate(0.6deg);
+    background:var(--mustard);
+    padding:4px 12px;
+    border:3px solid var(--ink);
+    box-shadow:3px 3px 0 var(--ink);
+    display:inline-block;
+  }
+
+  /* ---------- Menu Combos ---------- */
+  .menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:22px;
+    margin-top:24px;
+  }
+  .combo{
+    background:#fff;
+    border:5px solid var(--ink);
+    border-radius:14px;
+    padding:0;
+    box-shadow:6px 6px 0 var(--ink);
+    overflow:hidden;
+    position:relative;
+    transition:transform .12s;
+  }
+  .combo:hover{ transform:translate(-2px,-2px); }
+  .combo .ribbon{
+    background:var(--ketchup);
+    color:#fff;
+    font-family:"Impact",sans-serif;
+    font-size:13px;
+    letter-spacing:0.16em;
+    padding:6px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:4px solid var(--ink);
+  }
+  .combo .ribbon .num{ background:var(--mustard); color:var(--ink); padding:2px 8px; border:2px solid var(--ink); border-radius:4px; }
+  .combo h4{
+    font-family:"Impact",sans-serif;
+    font-size:28px;
+    letter-spacing:0.01em;
+    margin:14px 18px 4px;
+    color:var(--ink);
+    line-height:1;
+  }
+  .combo .tag{
+    margin:0 18px 10px;
+    font-family:"Arial Black",sans-serif;
+    font-size:14px;
+    color:var(--ketchup);
+    font-style:italic;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .combo p{
+    margin:0 18px 14px;
+    font-family:"Arial", system-ui, sans-serif;
+    font-size:14.5px;
+    line-height:1.55;
+    color:#222;
+  }
+  .combo .meal-includes{
+    margin:10px 18px 14px;
+    background:var(--paper);
+    border:2px dashed var(--ink);
+    border-radius:6px;
+    padding:8px 12px;
+    font-family:"Arial",sans-serif;
+    font-size:12.5px;
+    color:#333;
+  }
+  .combo .meal-includes strong{
+    font-family:"Impact",sans-serif;
+    letter-spacing:0.1em;
+    display:block;
+    margin-bottom:3px;
+    color:var(--ketchup);
+  }
+  .combo .price-row{
+    background:var(--mustard);
+    border-top:4px solid var(--ink);
+    padding:10px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:"Impact",sans-serif;
+  }
+  .combo .price{
+    font-size:24px;
+    color:var(--ink);
+  }
+  .combo .price s{ color:#666; font-size:16px; margin-right:6px;}
+  .combo .order{
+    background:var(--ketchup);
+    color:#fff;
+    border:3px solid var(--ink);
+    border-radius:6px;
+    padding:6px 14px;
+    font-size:14px;
+    letter-spacing:0.06em;
+    box-shadow:3px 3px 0 var(--ink);
+    cursor:pointer;
+  }
+
+  /* Variants */
+  .combo.value .ribbon{ background:var(--neon-blue); }
+  .combo.deluxe .ribbon{ background:#000; }
+  .combo.deluxe .ribbon{ color:var(--mustard); }
+  .combo.spicy .ribbon{ background:var(--slop-orange); }
+  .combo.healthy .ribbon{ background:var(--wellness); }
+  .combo.feed .ribbon{ background:var(--feed-pink); }
+  .combo.limited .ribbon{ background:#000; color:var(--feed-pink); }
+
+  .combo .sticker{
+    position:absolute;
+    top:-12px; right:14px;
+    background:var(--mustard);
+    color:var(--ink);
+    border:3px solid var(--ink);
+    font-family:"Impact",sans-serif;
+    font-size:12px;
+    padding:4px 10px;
+    transform:rotate(8deg);
+    letter-spacing:0.08em;
+    box-shadow:2px 2px 0 var(--ink);
+    z-index:2;
+  }
+  .combo .sticker.alt{ background:var(--feed-pink); color:#fff; right:auto; left:14px; transform:rotate(-9deg); }
+
+  /* ---------- The Crack ---------- */
+  .crack-panel{
+    margin:48px 0 12px;
+    background:#1a1a1a;
+    color:#d8d3c4;
+    border:4px solid var(--crack);
+    padding:24px 26px;
+    font-family:"Courier New", monospace;
+    position:relative;
+    border-radius:6px;
+    box-shadow:0 0 0 4px #000, 0 0 24px rgba(194,54,43,0.4);
+    overflow:hidden;
+  }
+  .crack-panel::before{
+    content:"// PIRATE BROADCAST :: OVERRIDE :: 02:14 AM";
+    display:block;
+    color:#5C7A4F;
+    font-size:12px;
+    letter-spacing:0.2em;
+    margin-bottom:14px;
+  }
+  .crack-panel h4{
+    color:var(--crack);
+    font-family:"Courier New", monospace;
+    font-size:22px;
+    margin:0 0 10px;
+    letter-spacing:0.04em;
+  }
+  .crack-panel p{
+    margin:0 0 10px;
+    font-size:14.5px;
+    line-height:1.6;
+    color:#e6dfcd;
+  }
+  .crack-panel .glitch{
+    color:#fff;
+    background:var(--crack);
+    padding:0 4px;
+  }
+
+  /* ---------- Nutrition Facts ---------- */
+  .nutrition{
+    margin:36px auto;
+    max-width:380px;
+    background:#fff;
+    border:4px solid var(--ink);
+    padding:14px 18px 18px;
+    font-family:"Arial Black", sans-serif;
+    color:var(--ink);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .nutrition h5{
+    font-family:"Impact",sans-serif;
+    font-size:34px;
+    margin:0;
+    border-bottom:10px solid var(--ink);
+    padding-bottom:2px;
+    letter-spacing:0.01em;
+  }
+  .nutrition .servings{ font-size:12px; margin:6px 0 8px; }
+  .nutrition .calories{
+    border-top:2px solid var(--ink);
+    border-bottom:6px solid var(--ink);
+    padding:6px 0;
+    font-family:"Impact",sans-serif;
+    font-size:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+  }
+  .nutrition .calories b{ font-size:34px; line-height:1; }
+  .nutrition ul{
+    list-style:none;
+    padding:0;
+    margin:6px 0 0;
+    font-size:13px;
+  }
+  .nutrition li{
+    display:flex;
+    justify-content:space-between;
+    padding:3px 0;
+    border-bottom:1px solid var(--ink);
+  }
+  .nutrition li.tiny{ border-bottom:0; font-size:11px; padding-top:8px; line-height:1.4; font-family:"Arial",sans-serif; font-weight:normal;}
+  .nutrition .scratch{
+    color:var(--crack);
+    font-family:"Courier New",monospace;
+    font-weight:normal;
+    text-decoration:line-through wavy var(--crack);
+  }
+
+  /* ---------- Subscription Upsell ---------- */
+  .upsell{
+    margin:48px 0 24px;
+    background:linear-gradient(110deg, #000 0%, #1a1a1a 60%, #2c0a32 100%);
+    color:#fff;
+    border:5px solid var(--mustard);
+    border-radius:16px;
+    padding:28px;
+    box-shadow:8px 8px 0 var(--ink);
+    position:relative;
+    overflow:hidden;
+  }
+  .upsell h3{
+    font-family:"Impact",sans-serif;
+    font-size:34px;
+    margin:0 0 4px;
+    color:var(--mustard);
+    letter-spacing:0.02em;
+  }
+  .upsell .lead{
+    font-family:"Arial Black",sans-serif;
+    font-size:14px;
+    color:#ddd;
+    margin-bottom:16px;
+  }
+  .tiers{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:14px;
+  }
+  .tier{
+    background:#222;
+    border:3px solid #444;
+    border-radius:10px;
+    padding:16px;
+  }
+  .tier.featured{
+    border-color:var(--feed-pink);
+    background:#2a1421;
+    transform:scale(1.02);
+  }
+  .tier h6{
+    font-family:"Impact",sans-serif;
+    font-size:20px;
+    margin:0 0 4px;
+    color:var(--mustard);
+    letter-spacing:0.04em;
+  }
+  .tier.featured h6{ color:var(--feed-pink); }
+  .tier .px{
+    font-family:"Impact",sans-serif;
+    font-size:28px;
+    margin:4px 0 8px;
+    color:#fff;
+  }
+  .tier ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+    font-family:"Arial",sans-serif;
+    font-size:13px;
+    color:#ddd;
+    line-height:1.5;
+  }
+  .tier li{ padding:2px 0; }
+  .tier li::before{ content:"+ "; color:var(--wellness); font-weight:bold; }
+  .tier li.bad::before{ content:"× "; color:var(--ketchup); }
+  .tier li.bad{ color:#aaa; text-decoration:line-through; }
+
+  /* ---------- Footer ---------- */
+  .legal{
+    margin-top:48px;
+    background:var(--ink);
+    color:#888;
+    border-radius:12px;
+    padding:24px 26px;
+    font-family:"Arial",sans-serif;
+    font-size:11.5px;
+    line-height:1.55;
+    box-shadow:6px 6px 0 var(--ketchup);
+  }
+  .legal .esrb{
+    float:right;
+    background:#fff;
+    color:var(--ink);
+    border:3px solid var(--ink);
+    padding:8px 14px;
+    font-family:"Impact",sans-serif;
+    font-size:38px;
+    margin-left:18px;
+    text-align:center;
+    line-height:1;
+  }
+  .legal .esrb small{
+    display:block;
+    font-size:10px;
+    letter-spacing:0.1em;
+    margin-top:4px;
+    font-family:"Arial Black",sans-serif;
+  }
+  .legal a{ color:var(--mustard); }
+  .legal .smaller{ font-size:10px; opacity:0.7; margin-top:10px;}
+
+  .strap{
+    text-align:center;
+    margin-top:30px;
+    font-family:"Impact",sans-serif;
+    color:var(--ink);
+    font-size:13px;
+    letter-spacing:0.18em;
+    opacity:0.7;
+  }
+</style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ============== HERO ============== -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="starburst">
+          NEW!<br><br><small>200% MORE<br>SLOP</small>
+        </div>
+        <span class="kicker">A McXyon's Family Entertainment Product™</span>
+        <h1>GNOY<br>SIMULATOR<span class="trademark">®</span></h1>
+        <h2>It's the game you didn't know you were already playing.</h2>
+        <div class="yum">★ Real Slop Flavor™ ★ Algorithmically Approved ★ Now With Receipts ★</div>
+        <div class="ctas">
+          <a class="btn" href="#combos">ORDER A COMBO</a>
+          <a class="btn alt" href="#feedplus">UPGRADE TO PREMIUM</a>
+          <a class="btn green" href="#truth">…or wake up.</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== PULL QUOTES ============== -->
+    <div class="quotes">
+      <div class="q">
+        <div class="stars">★★★★★</div>
+        "An incredible value meal of a game. I have not slept in nine days
+        and my landlord can't find me."
+        <cite>— IGNoy, 11/10</cite>
+      </div>
+      <div class="q">
+        <div class="stars">★★★★★</div>
+        "Finally, a satirical RPG that respects my time and absolutely
+        none of my dopamine receptors."
+        <cite>— Polygnoym</cite>
+      </div>
+      <div class="q">
+        <div class="stars">★★★★★</div>
+        "I'm pretty sure the McXyon's commercial in the background just
+        warbled at me. Is that supposed to happen?"
+        <cite>— TrustedAnchorReviews.tv</cite>
+      </div>
+      <div class="q">
+        <div class="stars">★★★★★</div>
+        "Five stars. Five large fries. Cancel my subscriptions. I am
+        leaving the apartment."
+        <cite>— Anon, FeedGram Premium subscriber</cite>
+      </div>
+    </div>
+
+    <!-- ============== SECTION: COMBOS ============== -->
+    <div id="combos" class="section-head">
+      <h3>★ THE FULL MENU ★</h3>
+      <br>
+      <span class="sub">15 deluxe combo meals. Each one is a real chunk of the game.</span>
+    </div>
+
+    <div class="menu">
+
+      <!-- Combo 1 — Epic 1 -->
+      <article class="combo value">
+        <div class="ribbon"><span>★ HOUSE SPECIAL ★</span><span class="num">01</span></div>
+        <h4>The Starter Goy</h4>
+        <div class="tag">The kid's meal that runs the whole show</div>
+        <p>
+          Every burger needs a bun. This is the foundation — the save system,
+          the 7 attributes, the 24 skills, the 40 talents, the secret
+          <em>Awakening Track</em> that quietly counts how red-pilled you've
+          become. Nothing on the screen is here, but everything else
+          <em>tastes</em> because of it.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          7 attributes · 24 skills · 40 talents · skill-check dice engine ·
+          save/load · keyboard controls · the bare bones HUD frame
+        </div>
+        <div class="price-row">
+          <div class="price"><s>$5.99</s> $4.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 2 — Epic 2 -->
+      <article class="combo">
+        <div class="ribbon"><span>BEST SELLER</span><span class="num">02</span></div>
+        <span class="sticker">DAILY ★ SPECIAL</span>
+        <h4>The Daily Grind Meal</h4>
+        <div class="tag">Wake up. Slop. Work. Sleep. Try again.</div>
+        <p>
+          Your day broken into Morning / Afternoon / Evening / Night slots.
+          Hit snooze and the Morning is just <em>gone</em> — first lesson, no
+          tutorial. Rent auto-deducts. Subscriptions guilt-trip you when you try
+          to cancel. The economy bleeds you dry on purpose.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          4-slot day cycle · sleep tick · auto-bill payments ·
+          subscription cancel ritual · Cope &amp; Fatigue meters · Slop Damage
+        </div>
+        <div class="price-row">
+          <div class="price">$7.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 3 — Epic 3 -->
+      <article class="combo spicy">
+        <div class="ribbon"><span>🌶 EXTRA SPICY 🌶</span><span class="num">03</span></div>
+        <h4>The Hotline Combo</h4>
+        <div class="tag">Top-down. Lethal. Restart in under a second.</div>
+        <p>
+          Stats make you <em>tougher</em>, never invincible. When you bleed out
+          you choose: <strong>YIELD</strong> (get captured, manage the fallout)
+          or <strong>ATTEMPT ESCAPE</strong> (one fast risky roll). The enemy
+          faction reads how you fight and adapts. Brought a Slop Bag to the
+          fight? They're stunned eating it for six seconds.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          encounter snapshot/restart · YIELD vs ESCAPE · 35+ weapons ·
+          six signature satirical weapons · faction counter-tactics
+        </div>
+        <div class="price-row">
+          <div class="price">$9.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 4 — Epic 4 -->
+      <article class="combo">
+        <div class="ribbon"><span>BUILD-A-FIT</span><span class="num">04</span></div>
+        <h4>The Outfit Bundle</h4>
+        <div class="tag">15 slots. 5 quality tiers. Set bonuses or it's nothing.</div>
+        <p>
+          What you wear is who the world sees. Dress fully civilian and Heat
+          decays faster. Dress fully tactical and nobody will talk to you,
+          but you hit twice as hard. Resistance gear is crafted in your
+          homebase, never bought.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          15 equip slots · 5 quality tiers · 5 set bonuses ·
+          crafting bench · paper-doll inventory UI
+        </div>
+        <div class="price-row">
+          <div class="price">$5.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 5 — Epic 5 -->
+      <article class="combo deluxe">
+        <div class="ribbon"><span>★ DELUXE EXCLUSIVE ★</span><span class="num">05</span></div>
+        <span class="sticker alt">SIGNATURE</span>
+        <h4>The Conspiracy Wall Platter</h4>
+        <div class="tag">Pin it. String it. Stamp it. Publish it.</div>
+        <p>
+          The heart of the game. A literal corkboard in your apartment
+          where you drag red string between clues. Each string fires a skill
+          check — success gets a solid line, failure gets a dotted line you
+          can <em>still publish</em> at a Credibility cost. Then the Dossier
+          screen, where you pick Platform × Framing × Audience and watch the
+          Credibility-vs-Heat meters dance before you commit.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          Physical Board · Dossier Interface · Publication Framing Matrix ·
+          Thought Cabinet · the Truth Paradox itself
+        </div>
+        <div class="price-row">
+          <div class="price">$12.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 6 — Epic 6 -->
+      <article class="combo feed">
+        <div class="ribbon"><span>FEEDGRAM™ EXCLUSIVE</span><span class="num">06</span></div>
+        <h4>The Word Soup Bowl</h4>
+        <div class="tag">Disco-Elysium-tier dialogue. With receipts.</div>
+        <p>
+          See the difficulty up front (<em>"Yap Game DC 14 — push back"</em>),
+          never the consequence. 24 named Inner Voices each with their own
+          font and color get louder as you Awaken. Drop a photo from your
+          pocket onto the conversation to unlock a line you couldn't otherwise
+          say. Every word is recorded forever — NPCs quote you back, the Cage
+          interrogates them, the Feed edits your soundbites.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          custom dialogue engine · visible-DC checks · 24 Inner Voices ·
+          item-drop in dialogue · Composure-HP boss dialogue ·
+          searchable conversation log
+        </div>
+        <div class="price-row">
+          <div class="price">$11.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 7 — Epic 7 -->
+      <article class="combo deluxe">
+        <div class="ribbon"><span>CHEF'S MOST AMBITIOUS</span><span class="num">07</span></div>
+        <span class="sticker">CONTAINS NUTS</span>
+        <h4>The Three-Layer Surveillance Cake</h4>
+        <div class="tag">The world watches back. Even when you're asleep.</div>
+        <p>
+          Three separate systems running at once. A single faction
+          <strong>Dossier</strong> the Cage assembles on you. A
+          <strong>Politburo Simulation</strong> that runs every week
+          whether you exist or not — bosses succeed each other, blackmail
+          debts come due. A <strong>Reputation Web</strong> where individual
+          people remember your exact words and gossip with their neighbors.
+          When the Cage interrogates one of them, your words flow verbatim
+          into the dossier.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          Player Dossier · deterministic weekly Politburo tick ·
+          Reputation Web gossip propagation · Interrogation Bridge
+        </div>
+        <div class="price-row">
+          <div class="price">$14.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 8 — Epic 8 -->
+      <article class="combo">
+        <div class="ribbon"><span>FAMILY SIZE</span><span class="num">08</span></div>
+        <h4>The Crew Bucket</h4>
+        <div class="tag">Build a cell. Hope nobody breaks.</div>
+        <p>
+          Recruit specialists through side quests and dialogue puzzles —
+          Researcher, Broadcaster, Crafter, Medic, Quartermaster, Analyst,
+          Handler. Your home grows: Apartment → Office → Underground HQ →
+          Distributed Cell Network. Loyalty decays from neglect. Recruits
+          can be captured, broken, or quietly turned into informants.
+          Once gone, gone forever.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          7 specialist roles · 4 homebase stages · loyalty resource ·
+          permanent recruit loss · Glowie conversion
+        </div>
+        <div class="price-row">
+          <div class="price">$8.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 9 — Epic 9 -->
+      <article class="combo">
+        <div class="ribbon"><span>NEIGHBORHOOD FAVORITE</span><span class="num">09</span></div>
+        <h4>The 12-District Tasting Tour</h4>
+        <div class="tag">Twelve flavors of dystopia. Heat per district.</div>
+        <p>
+          Slopside (where you live), the Cubicle Belt (where you work),
+          the Plaza (where the cameras are), the Vault District (where the
+          money is), the Garden (where they live), the Pulpit Quarter,
+          the Hollow (your safehouse), all the way up to The Compound.
+          Get loud in one district and the Heat stays local — rotating
+          between neighborhoods is core gameplay.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          12 districts · per-district Heat · streamed transitions ·
+          Ghost-gated sneak routes · progressive map UI
+        </div>
+        <div class="price-row">
+          <div class="price">$10.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 10 — Epic 10 -->
+      <article class="combo">
+        <div class="ribbon"><span>CHOOSE YOUR OWN</span><span class="num">10</span></div>
+        <h4>The Mystery Sampler</h4>
+        <div class="tag">No quest markers. You decide when you're done.</div>
+        <p>
+          Seven kinds of quests in parallel — main quest, boss
+          investigations, recruit personal arcs, emergent Politburo events,
+          side quests, Awakening story beats, district liberation goals.
+          You find them by overhearing things, reading forum posts, or
+          stumbling onto a dead drop. Your journal is written in your
+          character's own voice. When you decide you have enough on the
+          Inner Ring, you commit. The game does not push you there.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          7 quest types · Quest Journal in prose ·
+          Inner Ring Confidence meter · optional Markers Mode
+        </div>
+        <div class="price-row">
+          <div class="price">$7.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 11 — Epic 11 -->
+      <article class="combo limited">
+        <div class="ribbon"><span>LIMITED TIME</span><span class="num">11</span></div>
+        <span class="sticker alt">5–7 BOSSES</span>
+        <h4>The Boss Battle Bucket</h4>
+        <div class="tag">Expose them. Permanently.</div>
+        <p>
+          Fact Checker, Trusted Anchor, Debt Dealer, Innovation Czar, the
+          Pulpit's rotating-mask figure, the Glowie hiding inside your own
+          recruits. Some you beat with documents. Some with dialogue. Some
+          by handing them to a rival faction. When a boss falls, the
+          Politburo fills the role with a successor — but that individual
+          is gone forever.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          5–7 multi-stage boss arcs · dialogue-as-combat bosses ·
+          cross-faction manipulation paths · Inner Ring endgame hook
+        </div>
+        <div class="price-row">
+          <div class="price">$13.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 12 — Epic 12 -->
+      <article class="combo">
+        <div class="ribbon"><span>★ FREE WITH ORDER ★</span><span class="num">12</span></div>
+        <h4>The "Perfectly Normal Morning"</h4>
+        <div class="tag">The first 15 minutes. No tutorial popups.</div>
+        <p>
+          Wake up, snooze (lose the Morning, learn the lesson), eat slop,
+          scroll the Feed, ride past the billboard, clock in at Greystone
+          Data Solutions, and meet <strong>Dave</strong>. Your first answer
+          to Dave <em>permanently locks</em> his fate. Default-gnoy answer:
+          he stays a gnoy forever. Real answer: he becomes your first
+          recruit. Too awakened: he reports you, and you find out Greystone
+          was a Cage front all along.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          alarm/snooze · fridge slop · staged news event ·
+          Greystone job · Schrödinger's Dave · evening forum bookmark
+        </div>
+        <div class="price-row">
+          <div class="price">$6.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 13 — Epic 13 -->
+      <article class="combo deluxe">
+        <div class="ribbon"><span>SIGNATURE FLAVOR</span><span class="num">13</span></div>
+        <span class="sticker">★ HEAR THIS ★</span>
+        <h4>The Aesthetic Combo</h4>
+        <div class="tag">As you wake up, the world sounds wrong.</div>
+        <p>
+          Two visual languages share one component grammar: <em>Xyoner</em>
+          (corporate, oversaturated, geometric sans — what you're looking
+          at right now) and <em>Resistance</em> (handmade, typewriter, aged
+          paper). As you Awaken, the screen literally desaturates. The
+          McXyon's jingle in the background <strong>audibly deteriorates</strong>
+          across five tiers — clean, wobbly, skipping, glitching, fully
+          corrupted. The HUD itself starts cracking.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          dual theme system · Awakening Filter shader ·
+          5-tier music deterioration · HUD glitch mirror ·
+          Awakening cinematics at levels 1, 5, 10
+        </div>
+        <div class="price-row">
+          <div class="price">$9.99</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo 14 — Epic 14 -->
+      <article class="combo healthy">
+        <div class="ribbon"><span>WELLNESS APPROVED</span><span class="num">14</span></div>
+        <h4>The Ending Variety Pack</h4>
+        <div class="tag">Five ways out. Three at launch. Plus the polish.</div>
+        <p>
+          Five possible endings exist: Public Reckoning, Shadow Replacement,
+          The Burn, The Long Game, and <strong>The Sleep</strong> (yes, you
+          can give up — it's a real, supported ending, not a failure state).
+          This combo also includes the accessibility (WCAG AA, dyslexia
+          font, color-blind cues, full keyboard, screen reader),
+          localization-readiness, tone-calibration playtests, IP/legal
+          review, and Steam Deck Verified at 60fps.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          3 ship endings + 2 north-star hooks · WCAG AA accessibility ·
+          localization pipeline · Steam Deck Verified · final polish
+        </div>
+        <div class="price-row">
+          <div class="price">$8.49</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+      <!-- Combo A — Epic A -->
+      <article class="combo deluxe">
+        <div class="ribbon"><span>COOKED IN PARALLEL</span><span class="num">A</span></div>
+        <span class="sticker alt">PIPING HOT</span>
+        <h4>The Art Department Side Hustle</h4>
+        <div class="tag">Sprites, tilesets, portraits, icons.</div>
+        <p>
+          The one with the letter. Runs alongside every other combo because
+          art doesn't wait for code. The player wageworker sprite (idle +
+          walk), Dave's three variants, the Fact Checker boss, gnoy
+          civilians, named NPCs, the apartment interior, Greystone, the
+          Plaza, every HUD element, every portrait, every skill icon —
+          all produced through carefully locked image-generation pipelines.
+        </p>
+        <div class="meal-includes">
+          <strong>★ Includes:</strong>
+          character sprite pipeline · tileset pipeline · 256×256 portrait pipeline ·
+          HUD/UI mock assets · 24 skill icons · VS portrait set
+        </div>
+        <div class="price-row">
+          <div class="price"><s>$10.99</s> Side</div>
+          <button class="order">ADD TO ORDER</button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ============== NUTRITION FACTS ============== -->
+    <div class="section-head">
+      <h3>WHAT'S IN THE BAG?</h3>
+    </div>
+
+    <div class="nutrition" aria-label="Nutrition facts for Gnoy Simulator">
+      <h5>Nutrition Facts</h5>
+      <div class="servings">Serving Size: 1 playthrough (40–60 hrs)<br>Servings Per Container: 2+ (we hope)</div>
+      <div class="calories">Calories <b>∞</b></div>
+      <ul>
+        <li><span>Total Slop</span><span>200% DV</span></li>
+        <li><span>Dialogue</span><span>~80,000 words</span></li>
+        <li><span>Districts</span><span>3 (VS) / 12 (full)</span></li>
+        <li><span>Bosses</span><span>5–7</span></li>
+        <li><span>Endings</span><span>3 (+ 2 hidden)</span></li>
+        <li><span>Skills</span><span>24</span></li>
+        <li><span>Inner Voices</span><span>24, all yelling</span></li>
+        <li><span>Quest Markers</span><span class="scratch">0</span></li>
+        <li><span>Microtransactions</span><span class="scratch">none</span></li>
+        <li class="tiny">
+          % Daily Value (DV) tells you how much of a free moment
+          contributes to a fully-engaged life. 2,000 hours of attention
+          per day is used for general nutrition advice.
+        </li>
+      </ul>
+    </div>
+
+    <!-- ============== THE CRACK ============== -->
+    <div id="truth" class="crack-panel">
+      <h4>// SIGNAL HIJACK — THE THING THE AD IS ACTUALLY ABOUT //</h4>
+      <p>
+        You scrolled this far. Good. The combo meal pitch above is real — those
+        are the actual chunks of the game — but the <span class="glitch">tone</span>
+        is the joke. <strong>Gnoy Simulator is a satirical CRPG</strong> about waking
+        up inside a corporate-dystopian alt-Earth where the slop, the Feed, the wage
+        cage, and the ruling class are all the <em>same machinery</em>, and the people
+        who notice get called crazy on the news that night.
+      </p>
+      <p>
+        It's Disco Elysium dialogue depth, Hotline Miami combat, Persona day cycle,
+        Pokémon top-down camera, and Fallout dark humor — squeezed into one game by
+        one developer, with the bit that the corporate UI <span class="glitch">deteriorates</span>
+        as you wake up. The McXyon's jingle warbles. Your HUD glitches. The world
+        starts looking <em>wrong</em>.
+      </p>
+      <p>
+        Three games run on the same skeleton: an <strong>investigation game</strong>
+        (red string on a corkboard), a <strong>life simulator</strong>
+        (rent, slop, Cope, Fatigue), and an <strong>action game</strong>
+        (top-down lethal combat where stats matter but never save you).
+        The world simulates the ruling class whether you exist or not. Individual
+        people remember your exact words. The Truth Paradox: the closer you get to
+        right, the more dangerous and discredited you become.
+      </p>
+      <p style="color:var(--mustard); font-family:'Impact',sans-serif; letter-spacing:0.04em; font-size:16px;">
+        It's the game where giving up is a real ending, and finishing is its own kind of grief.
+      </p>
+    </div>
+
+    <!-- ============== UPSELL ============== -->
+    <div id="feedplus" class="upsell">
+      <h3>UPGRADE TO <span style="color:var(--feed-pink);">FEEDGRAM PREMIUM™</span></h3>
+      <div class="lead">More you, more often, more visibility on your dossier. Cancel anytime through three retention screens, a phone call, and a guilt trip.</div>
+      <div class="tiers">
+        <div class="tier">
+          <h6>Basic Gnoy</h6>
+          <div class="px">$0 <small style="font-size:12px;color:#999;">/ free with ads</small></div>
+          <ul>
+            <li>Personalized slop recommendations</li>
+            <li>Ads every 90 seconds</li>
+            <li class="bad">Privacy</li>
+            <li class="bad">Sleep</li>
+          </ul>
+        </div>
+        <div class="tier featured">
+          <h6>Premium Gnoy</h6>
+          <div class="px">$24.99 <small style="font-size:12px;color:#ccc;">/ mo</small></div>
+          <ul>
+            <li>Ads every 60 seconds</li>
+            <li>Exclusive Trusted Anchor content</li>
+            <li>Auto-billed forever</li>
+            <li class="bad">Off button</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h6>Awake</h6>
+          <div class="px">cancel everything</div>
+          <ul>
+            <li>Stop paying</li>
+            <li>Start asking questions</li>
+            <li>Find the underground forum</li>
+            <li>Read the dossier they have on you</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== LEGAL FOOTER ============== -->
+    <div class="legal">
+      <div class="esrb">M<small>FOR MISINFO</small></div>
+      <strong style="color:#ddd; font-family:'Impact',sans-serif; letter-spacing:0.06em;">GNOY SIMULATOR®</strong> is a registered trademark of nobody.
+      Contains: satirical content, anti-consumerist themes, depictions of fast food
+      addiction, social-media induced dissociation, wage slavery, surveillance capitalism,
+      and one (1) boss fight that is just a podcast. May contain stochastic flashbacks
+      to your own subscription history. The Xyoners are a fictional malignant ruling class
+      and bear no resemblance to any real ethnic, religious, or national group. This is
+      equal-opportunity satire — ideologies and behaviors only.
+      <br><br>
+      Engine: Godot 4.x · Solo developer · ~80–120k words at launch · PC + Steam Deck Verified at launch ·
+      macOS / Switch post-launch.
+      <div class="smaller">
+        Side effects may include: cancelling SloppFlix, taking a walk, looking
+        at your phone with suspicion, finding a corkboard at a thrift store and
+        getting ideas, and a sudden urge to ask who actually owns the building.
+        Do not operate heavy machinery while Awakening Level is ≥ 7.
+      </div>
+    </div>
+
+    <div class="strap">★ ORDER NOW · LIMITED SLOTS PER DAY · NO MARKERS BY DEFAULT ★</div>
+
+  </div>
+
+</body>
+</html>
