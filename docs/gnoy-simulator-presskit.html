@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gnoy Simulator — Press Kit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#120D0A;
+    --bg-2:#1A1410;
+    --panel:#221913;
+    --panel-2:#2D211A;
+    --panel-3:#352719;
+    --paper:#F4ECDA;
+    --paper-2:#E8DEC4;
+    --ink:#0E0A07;
+    --red:#E8302F;
+    --red-2:#B6231F;
+    --yellow:#FFC629;
+    --orange:#FF7A00;
+    --green:#5C7A4F;
+    --green-bright:#00B488;
+    --blue:#1F8FFF;
+    --pink:#FF3DA1;
+    --purple:#7B4FAA;
+    --pencil:#8C8378;
+    --pencil-2:#5C544C;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--paper);
+    font-family:"Inter","Helvetica Neue","Arial",system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .page{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ==================== HERO ==================== */
+  .hero{ position:relative; padding:80px 0 120px; overflow:hidden; }
+  .hero::before{
+    content:""; position:absolute; top:-100px; left:-200px;
+    width:90%; height:520px;
+    background:var(--red); transform:skewY(-8deg);
+    z-index:0; opacity:0.95;
+  }
+  .hero::after{
+    content:""; position:absolute; top:200px; right:-100px;
+    width:280px; height:280px; background:var(--yellow); z-index:0;
+    clip-path:polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero .topbar{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:11px; letter-spacing:0.3em; text-transform:uppercase;
+    color:rgba(255,255,255,0.8); margin-bottom:60px; font-weight:700;
+  }
+  .hero .topbar .dot{
+    display:inline-block; width:8px; height:8px;
+    background:var(--yellow); border-radius:50%; margin-right:8px;
+    vertical-align:middle; animation:pulse 2.2s infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.4; transform:scale(0.7);} }
+  .hero h1{
+    font-size:clamp(72px, 13vw, 180px); line-height:0.86;
+    letter-spacing:-0.045em; font-weight:900; margin:0;
+    color:var(--paper); text-shadow:6px 6px 0 var(--ink);
+  }
+  .hero h1 .slash{ color:var(--yellow); display:inline-block; transform:translateY(-6px); margin:0 2px; }
+  .hero .tag{
+    margin-top:36px; font-size:clamp(20px, 2.4vw, 28px);
+    font-weight:600; line-height:1.3; max-width:780px; color:var(--paper);
+  }
+  .hero .tag .hl{ background:var(--ink); color:var(--yellow); padding:2px 8px; }
+  .hero .pillars{ display:flex; gap:10px; margin-top:48px; flex-wrap:wrap; }
+  .pillar{
+    background:var(--ink); color:var(--paper); padding:9px 16px;
+    font-size:12px; font-weight:700; letter-spacing:0.14em;
+    text-transform:uppercase; border:2px solid var(--paper);
+  }
+  .pillar.red{ background:var(--red-2); border-color:var(--red-2); }
+  .pillar.yellow{ background:var(--yellow); color:var(--ink); border-color:var(--yellow); }
+  .pillar.green{ background:var(--green); border-color:var(--green); }
+
+  /* ==================== SECTION CHROME ==================== */
+  section{ padding:80px 0; position:relative; }
+  .section-tag{
+    display:inline-block; font-size:12px; letter-spacing:0.3em;
+    text-transform:uppercase; font-weight:800; color:var(--red);
+    margin-bottom:14px; padding-left:14px; border-left:3px solid var(--red);
+  }
+  h2.display{
+    font-size:clamp(34px, 5.5vw, 64px); line-height:0.98;
+    letter-spacing:-0.025em; font-weight:900; margin:0 0 20px;
+    color:var(--paper); max-width:880px;
+  }
+  h2.display .y{ color:var(--yellow); }
+  h2.display .r{ color:var(--red); }
+  p.lede{
+    font-size:18px; line-height:1.6; color:rgba(244,236,218,0.85); max-width:760px;
+  }
+  p.lede strong{ color:var(--paper); font-weight:700; }
+
+  /* ==================== QUICK FACTS GRID ==================== */
+  .facts{
+    margin-top:32px;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
+    border:1px solid rgba(255,255,255,0.18);
+  }
+  @media (max-width:780px){ .facts{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:480px){ .facts{ grid-template-columns:1fr; } }
+  .facts .f{
+    padding:20px 22px;
+    border-right:1px solid rgba(255,255,255,0.10);
+    border-bottom:1px solid rgba(255,255,255,0.10);
+    background:var(--panel);
+  }
+  .facts .f small{
+    display:block; font-size:10px; letter-spacing:0.22em; color:var(--pencil);
+    text-transform:uppercase; margin-bottom:5px; font-weight:700;
+  }
+  .facts .f b{ font-size:15px; font-weight:900; color:var(--paper); letter-spacing:-0.005em; }
+  .facts .f.highlight b{ color:var(--yellow); }
+
+  /* ==================== NUMBERS STRIP ==================== */
+  .numbers{
+    background:var(--bg-2);
+    border-top:3px solid var(--red); border-bottom:3px solid var(--red);
+    margin:0 -28px; padding:36px 28px;
+  }
+  .numbers .grid{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
+  }
+  .numbers .cell{ text-align:left; padding:14px 18px; border-right:1px solid rgba(255,255,255,0.08); }
+  .numbers .cell:nth-child(4n){ border-right:0; }
+  .numbers .n{ font-size:64px; font-weight:900; line-height:1; letter-spacing:-0.04em; color:var(--yellow); }
+  .numbers .cell.alt .n{ color:var(--red); }
+  .numbers .cell.alt2 .n{ color:var(--green-bright); }
+  .numbers .l{
+    margin-top:6px; font-size:11px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--pencil); font-weight:700;
+  }
+  @media (max-width:760px){
+    .numbers .grid{ grid-template-columns:repeat(2, 1fr); }
+    .numbers .cell{ border-bottom:1px solid rgba(255,255,255,0.08); }
+  }
+
+  /* ==================== PITCH BLOCK ==================== */
+  .pitch-block{
+    background:var(--paper); color:var(--ink);
+    padding:40px 44px; box-shadow:8px 8px 0 var(--ink);
+    margin-top:32px; position:relative;
+  }
+  .pitch-block::before{
+    content:"Copy-paste ready"; position:absolute; top:-12px; left:24px;
+    background:var(--ink); color:var(--yellow); padding:4px 12px;
+    font-size:11px; letter-spacing:0.3em; font-weight:800;
+  }
+  .pitch-block p{
+    font-size:17px; line-height:1.65; margin:0; color:#2a221a;
+  }
+  .pitch-block p strong{ color:var(--ink); font-weight:800; }
+
+  /* ==================== DIFFERENTIATORS (3-col) ==================== */
+  .triptych{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:32px; }
+  @media (max-width:880px){ .triptych{ grid-template-columns:1fr; } }
+  .feat-card{
+    background:var(--panel); padding:32px 26px; position:relative;
+    border-top:6px solid var(--red); overflow:hidden;
+  }
+  .feat-card:nth-child(2){ border-top-color:var(--yellow); background:var(--panel-2); }
+  .feat-card:nth-child(3){ border-top-color:var(--green-bright); }
+  .feat-card .glyph{
+    font-size:42px; line-height:1; color:var(--red); font-weight:900;
+    margin-bottom:14px; display:inline-block;
+  }
+  .feat-card:nth-child(2) .glyph{ color:var(--yellow); }
+  .feat-card:nth-child(3) .glyph{ color:var(--green-bright); }
+  .feat-card h4{ font-size:24px; font-weight:900; margin:0 0 6px; color:var(--paper); letter-spacing:-0.01em; }
+  .feat-card .sub{
+    font-size:13px; font-weight:700; color:var(--yellow);
+    letter-spacing:0.04em; margin-bottom:14px; text-transform:uppercase;
+  }
+  .feat-card:nth-child(2) .sub{ color:var(--red); }
+  .feat-card:nth-child(3) .sub{ color:var(--green-bright); }
+  .feat-card p{ font-size:14.5px; color:rgba(244,236,218,0.78); margin:0; line-height:1.55; }
+
+  /* ==================== ASSETS NOTICE ==================== */
+  .assets-notice{
+    margin-top:32px; border:2px solid rgba(255,255,255,0.18);
+    background:var(--bg-2); padding:28px 32px;
+    display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:start;
+  }
+  @media (max-width:640px){ .assets-notice{ grid-template-columns:1fr; } }
+  .assets-notice .icon{ font-size:40px; line-height:1; }
+  .assets-notice h4{ font-size:18px; font-weight:900; margin:0 0 6px; color:var(--paper); }
+  .assets-notice p{ font-size:14px; color:rgba(244,236,218,0.78); margin:0; line-height:1.6; }
+  .assets-notice .avail{
+    margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .avail-item{
+    padding:7px 14px; font-size:12px; font-weight:700;
+    letter-spacing:0.1em; text-transform:uppercase; border:2px solid;
+  }
+  .avail-item.yes{ border-color:var(--green-bright); color:var(--green-bright); }
+  .avail-item.no{ border-color:rgba(255,255,255,0.2); color:var(--pencil); }
+
+  /* ==================== CONTACT BLOCK ==================== */
+  .contact-block{
+    margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border:2px solid var(--paper);
+  }
+  @media (max-width:780px){ .contact-block{ grid-template-columns:1fr; } }
+  .contact-block .left{
+    background:var(--paper); color:var(--ink);
+    padding:36px 40px;
+  }
+  .contact-block .right{
+    background:var(--panel); color:var(--paper);
+    padding:36px 40px; border-left:2px solid var(--paper);
+  }
+  @media (max-width:780px){ .contact-block .right{ border-left:0; border-top:2px solid var(--paper); } }
+  .contact-block .label{
+    font-size:11px; letter-spacing:0.3em; text-transform:uppercase;
+    font-weight:800; margin-bottom:10px;
+  }
+  .contact-block .left .label{ color:var(--red); }
+  .contact-block .right .label{ color:var(--yellow); }
+  .contact-block h3{
+    font-size:22px; font-weight:900; margin:0 0 10px; letter-spacing:-0.01em;
+  }
+  .contact-block .left h3{ color:var(--ink); }
+  .contact-block .right h3{ color:var(--paper); }
+  .contact-block p{ font-size:14px; line-height:1.65; margin:0 0 16px; }
+  .contact-block .left p{ color:#3a342c; }
+  .contact-block .right p{ color:rgba(244,236,218,0.78); }
+  .contact-link{
+    display:inline-block; padding:10px 20px;
+    font-size:13px; font-weight:800; letter-spacing:0.12em;
+    text-transform:uppercase; text-decoration:none;
+    background:var(--ink); color:var(--yellow);
+    border:2px solid var(--ink);
+  }
+  .contact-block .right .contact-link{
+    background:var(--yellow); color:var(--ink); border-color:var(--yellow);
+  }
+
+  /* ==================== FOOTER ==================== */
+  .footer{
+    background:var(--ink); color:var(--pencil); text-align:center; padding:18px;
+    font-size:11px; letter-spacing:0.2em; text-transform:uppercase; font-weight:700;
+  }
+  .footer .y{ color:var(--yellow); }
+  .footer .r{ color:var(--red); }
+
+  /* ==================== MOBILE ==================== */
+  @media (max-width:640px){
+    section{ padding:48px 0; }
+    .hero{ padding:48px 0 64px; }
+    .hero .topbar{ margin-bottom:28px; }
+    .hero .pillars{ margin-top:24px; gap:8px; }
+    p.lede{ font-size:16px; }
+    .pitch-block{ padding:28px 22px; box-shadow:4px 4px 0 var(--ink); }
+    .pitch-block p{ font-size:15px; }
+  }
+  @media (max-width:480px){
+    .page{ padding:0 16px; }
+    .numbers{ margin:0 -16px; padding:24px 16px; }
+    .numbers .n{ font-size:42px; }
+    .numbers .cell{ padding:10px 12px; }
+  }
+  @media (max-width:520px){
+    .hero h1{ font-size:min(12vw, 56px); letter-spacing:-0.03em; }
+    .hero .topbar span:last-child{ display:none; }
+    .contact-block .left, .contact-block .right{ padding:24px 22px; }
+  }
+  @media (max-width:420px){
+    .hero::after{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== HERO ==================== -->
+  <header class="hero">
+    <div class="page">
+      <div class="hero-inner">
+        <div class="topbar">
+          <span><span class="dot"></span>Now in production · A satirical RPG</span>
+          <span>Press Kit</span>
+        </div>
+        <h1>GNOY<span class="slash">/</span><wbr>SIMULATOR</h1>
+        <p class="tag">
+          A top-down satirical RPG about waking up inside the
+          <span class="hl">slop</span>, and what it costs to stay awake.
+        </p>
+        <div class="pillars">
+          <span class="pillar red">Real-Time Combat</span>
+          <span class="pillar yellow">Inner Voices Dialogue</span>
+          <span class="pillar">Investigation</span>
+          <span class="pillar green">Politburo Simulation</span>
+          <span class="pillar">Five Endings</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== DISCLAIMER ==================== -->
+  <div style="
+    background:#1a0a0a;
+    border-top:2px solid #E8302F;
+    border-bottom:2px solid #E8302F;
+    padding:14px 28px;
+    text-align:center;
+    font-size:0.82rem;
+    line-height:1.6;
+    color:#c9bfb0;
+    letter-spacing:0.01em;
+  ">
+    <strong style="color:#FFC629;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.06em;">
+      Early Development. Subject to Change.
+    </strong><br>
+    <span>
+      <strong style="color:#fff;">Gnoy Simulator is currently in active production.</strong>
+      All features, systems, content, and release details shown here are
+      <strong style="color:#fff;">works in progress and subject to change without notice.</strong>
+      <br>
+      <strong style="color:#E8302F;">All images on this page are purely conceptual artwork</strong>
+      and do <strong style="color:#fff;">not</strong> represent final in-game visuals.
+      Front-end development has not yet begun. No screenshots, UI, or gameplay footage exists.
+    </span>
+  </div>
+
+  <!-- ==================== QUICK FACTS ==================== -->
+  <section>
+    <div class="page">
+      <span class="section-tag">Quick Facts</span>
+      <h2 class="display">Everything you need. <span class="y">Right here.</span></h2>
+
+      <div class="facts">
+        <div class="f"><small>Title</small><b>Gnoy Simulator</b></div>
+        <div class="f"><small>Genre</small><b>Top-Down Satirical RPG</b></div>
+        <div class="f highlight"><small>Status</small><b>Active Development</b></div>
+        <div class="f"><small>Platform</small><b>PC (Windows, Mac)</b></div>
+        <div class="f"><small>Engine</small><b>Godot 4.3</b></div>
+        <div class="f"><small>Release Window</small><b>TBD</b></div>
+        <div class="f"><small>Developer</small><b>Independent / Solo</b></div>
+        <div class="f"><small>Setting</small><b>Alt-Earth, Present Day</b></div>
+        <div class="f"><small>Player Count</small><b>Single Player</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BY THE NUMBERS ==================== -->
+  <div class="page">
+    <div class="numbers">
+      <div class="grid">
+        <div class="cell"><div class="n">7</div><div class="l">Attributes</div></div>
+        <div class="cell alt"><div class="n">24</div><div class="l">Skills</div></div>
+        <div class="cell alt2"><div class="n">40</div><div class="l">Talents</div></div>
+        <div class="cell"><div class="n">15</div><div class="l">Equipment Slots</div></div>
+        <div class="cell alt"><div class="n">12</div><div class="l">Districts</div></div>
+        <div class="cell"><div class="n">5</div><div class="l">Ruling Factions</div></div>
+        <div class="cell alt2"><div class="n">13</div><div class="l">Villains</div></div>
+        <div class="cell alt"><div class="n">5</div><div class="l">Endings</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== THE PITCH ==================== -->
+  <section>
+    <div class="page">
+      <span class="section-tag">The Pitch</span>
+      <h2 class="display">One paragraph. <span class="y">Copy it.</span></h2>
+
+      <div class="pitch-block">
+        <p>
+          <strong>Gnoy Simulator</strong> is a top-down satirical RPG set in an alt-Earth present day where
+          manufactured consensus has replaced genuine reality. You play a person who has begun to notice —
+          and noticing, in this world, is dangerous. The game combines real-time combat, a multi-voice inner
+          dialogue system, a political faction simulation, and a full investigation board into a single layered
+          experience built around one question: <strong>what does it cost to stay awake when everything around
+          you is designed to keep you asleep?</strong> Five distinct endings, 13 hand-crafted villains, and a
+          reputation web that tracks every choice you make across 12 city districts. Currently in active
+          development for PC.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT MAKES IT DIFFERENT ==================== -->
+  <section>
+    <div class="page">
+      <span class="section-tag">What Makes It Different</span>
+      <h2 class="display">Three systems <span class="r">nobody else is building.</span></h2>
+
+      <div class="triptych">
+
+        <div class="feat-card">
+          <div class="glyph">&#x2736;</div>
+          <div class="sub">Inner Voices Dialogue</div>
+          <h4>You Argue With Yourself</h4>
+          <p>
+            Every dialogue choice surfaces competing internal voices — Body, Mind, Soul, Mouth, Ghost, Signal —
+            each pulling in different directions. Your character's build determines which voices speak and how
+            loud. Conversations are three-way debates before a single word leaves your mouth. It is a dialogue
+            system that makes the cost of speaking visible.
+          </p>
+        </div>
+
+        <div class="feat-card">
+          <div class="glyph">&#x2605;</div>
+          <div class="sub">Politburo Simulation</div>
+          <h4>The System Has a Board</h4>
+          <p>
+            Five ruling factions control 12 city districts and hold seats on a Politburo that governs the game
+            world in real time. Their alliances shift, their agendas conflict, and your actions move their
+            standing up or down. You are not fighting a villain. You are navigating a power structure that was
+            running long before you arrived and will keep running if you lose.
+          </p>
+        </div>
+
+        <div class="feat-card">
+          <div class="glyph">&#x25CF;</div>
+          <div class="sub">Awakening Track</div>
+          <h4>Awareness Is a Resource</h4>
+          <p>
+            A 10-level deterioration track measures how awake you are — and punishes you for it. High
+            awakening unlocks deeper truths, harder choices, and better endings. It also makes the world
+            actively hostile. The game does not reward being comfortably numb, but it does make comfort
+            tempting. Every level is a mechanical tradeoff, not just a narrative one.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ASSETS ==================== -->
+  <section>
+    <div class="page">
+      <span class="section-tag">Press Assets</span>
+      <h2 class="display">What is <span class="y">available now.</span></h2>
+
+      <div class="assets-notice">
+        <div class="icon">&#x1F4C2;</div>
+        <div>
+          <h4>Asset Availability</h4>
+          <p>
+            The game is in active early development. Front-end production has not begun.
+            Logo, key art, and in-game screenshots do not yet exist. Conceptual artwork
+            used in the promo page is available on request and is clearly labeled as
+            non-final. We will update this page as production assets become available.
+          </p>
+          <div class="avail">
+            <span class="avail-item yes">Pitch Paragraph</span>
+            <span class="avail-item yes">Quick Facts</span>
+            <span class="avail-item yes">Concept Art (on request)</span>
+            <span class="avail-item no">Logo (not yet)</span>
+            <span class="avail-item no">Screenshots (not yet)</span>
+            <span class="avail-item no">Trailer (not yet)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section>
+    <div class="page">
+      <span class="section-tag">Contact</span>
+      <h2 class="display">Get in touch.</h2>
+
+      <div class="contact-block">
+        <div class="left">
+          <div class="label">Coverage Inquiries</div>
+          <h3>Press and Media</h3>
+          <p>
+            For coverage requests, interview inquiries, asset access, or any questions about
+            the game, reach out directly. We respond to all press inquiries personally.
+          </p>
+          <a class="contact-link" href="mailto:cpain224@gmail.com">cpain224@gmail.com</a>
+        </div>
+        <div class="right">
+          <div class="label">Follow Development</div>
+          <h3>Stay in the Loop</h3>
+          <p>
+            The game is in active development. The promo page is updated as new systems
+            and content are locked in. No mailing list yet, but one is coming.
+          </p>
+          <a class="contact-link" href="gnoy-simulator-promo.html">View Promo Page</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span class="y">Gnoy Simulator</span> &nbsp;&#x00B7;&nbsp; Independent Development &nbsp;&#x00B7;&nbsp; <span class="r">Active Production</span> &nbsp;&#x00B7;&nbsp; All details subject to change
+  </div>
+
+</body>
+</html>
